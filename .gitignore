@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Secrets — NEVER commit these.
+#
+# The credential bundle that came with the BBVA documentation contains the
+# client secret and the RSA signing key in plaintext, in several places. They
+# are excluded here, but exclusion is not remediation: those values have
+# already circulated and should be rotated with BBVA.
+# ---------------------------------------------------------------------------
+*.pem
+*.p8
+*.pfx
+*.key
+credenciales.txt
+credenciales.zip
+**/00.CREDENCIALES/
+**/P8/
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+api-clients/**/environments/*.local.bru
+api-clients/postman/*.local.json
+# Bruno export from the BBVA bundle: embeds the real client_secret and private key.
+03.BS_GRUPO/01.PROYECTO_BRUNO/API-PAY-BR.json
+
+# ---------------------------------------------------------------------------
+# .NET
+# ---------------------------------------------------------------------------
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.user
+*.suo
+.vs/
+TestResults/
+coverage*.json
+coverage*.xml
+*.trx
+
+# ---------------------------------------------------------------------------
+# Node / Angular
+# ---------------------------------------------------------------------------
+node_modules/
+dist/
+.angular/
+*.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ---------------------------------------------------------------------------
+# Editors / OS
+# ---------------------------------------------------------------------------
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Large source material kept locally, not in version control
+# ---------------------------------------------------------------------------
+*.mkv
+*.zip
