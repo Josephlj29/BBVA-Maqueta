@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-13 · Listar movimientos con número de cuenta menor a 18 dígitos
+  type: http
+  seq: 13
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["00110130210522635"]}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The account number must be 18 digits long.
+}
+
+docs {
+  Listar movimientos con número de cuenta menor a 18 dígitos
+
+  Caso SRCH-13 del plan de pruebas oficial. Esperado: HTTP 400.
+}

@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-14 · Listar movimientos sin ingresar número de cuenta
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":[""]}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq Mandatory parameter contracts not informed.
+}
+
+docs {
+  Listar movimientos sin ingresar número de cuenta
+
+  Caso SRCH-14 del plan de pruebas oficial. Esperado: HTTP 400.
+}

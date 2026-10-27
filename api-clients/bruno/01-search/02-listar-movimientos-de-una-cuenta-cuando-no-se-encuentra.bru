@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-02 · Listar movimientos de una cuenta cuando no se encuentran coincidencias
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109811"],"operationDate":{"fromDate":"2024-11-01T00:00:00.000Z","toDate":"2024-11-21T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.messages[0].message: eq No transactions to show.
+}
+
+docs {
+  Listar movimientos de una cuenta cuando no se encuentran coincidencias con los datos a filtrar
+
+  Caso SRCH-02 del plan de pruebas oficial. Esperado: HTTP 200.
+}

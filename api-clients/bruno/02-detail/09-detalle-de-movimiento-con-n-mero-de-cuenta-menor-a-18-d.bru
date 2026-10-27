@@ -1,0 +1,30 @@
+meta {
+  name: DTL-09 · Detalle de movimiento con número de cuenta menor a 18 dígitos
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/accounts/00110130010511473/transactions/PE00110201300105114734000000016
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The account number must be 18 digits long.
+}
+
+docs {
+  Detalle de movimiento con número de cuenta menor a 18 dígitos
+
+  Caso DTL-09 del plan de pruebas oficial. Esperado: HTTP 400.
+}

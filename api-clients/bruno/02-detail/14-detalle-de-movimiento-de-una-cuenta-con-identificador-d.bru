@@ -1,0 +1,30 @@
+meta {
+  name: DTL-14 · Detalle de movimiento de una cuenta con identificador de transacción m
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/accounts/001101300210515493/transactions/PE001102013002105154930000000066
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The transaction number must be 31 characters.
+}
+
+docs {
+  Detalle de movimiento de una cuenta con identificador de transacción mayor a 31 caracteres
+
+  Caso DTL-14 del plan de pruebas oficial. Esperado: HTTP 400.
+}

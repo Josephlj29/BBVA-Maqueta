@@ -1,0 +1,30 @@
+meta {
+  name: DTL-08 · Detalle de movimiento con número de cuenta mayor a 18 dígitos
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/accounts/0011013000210515493/transactions/PE00110201300210515493000000063
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The account number must be 18 digits long.
+}
+
+docs {
+  Detalle de movimiento con número de cuenta mayor a 18 dígitos
+
+  Caso DTL-08 del plan de pruebas oficial. Esperado: HTTP 400.
+}

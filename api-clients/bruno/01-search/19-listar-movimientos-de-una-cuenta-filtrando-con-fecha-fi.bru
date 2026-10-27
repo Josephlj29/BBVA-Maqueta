@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-19 · Listar movimientos de una cuenta filtrando con fecha final menor a la 
+  type: http
+  seq: 19
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300210484377"],"operationDate":{"fromDate":"2024-11-10T00:00:00.000Z","toDate":"2024-11-01T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The parameter operationDate.toDate value must be later than operationDate.fromDate value.
+}
+
+docs {
+  Listar movimientos de una cuenta filtrando con fecha final menor a la fecha inicial
+
+  Caso SRCH-19 del plan de pruebas oficial. Esperado: HTTP 400.
+}

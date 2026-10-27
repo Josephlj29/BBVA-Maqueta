@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-21 · Listar movimientos de una cuenta filtrando por fecha final pero sin in
+  type: http
+  seq: 21
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105118004"],"operationDate":{"toDate":"2024-11-18T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq Mandatory parameter operationDate.fromDate not informed.
+}
+
+docs {
+  Listar movimientos de una cuenta filtrando por fecha final pero sin ingresar fecha inicial o con valor vacío
+
+  Caso SRCH-21 del plan de pruebas oficial. Esperado: HTTP 400.
+}

@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-23 · Listar movimientos de una cuenta filtrando por fecha inicial menor a l
+  type: http
+  seq: 23
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109811"],"operationDate":{"fromDate":"2023-12-31T00:00:00.000Z","toDate":"2024-11-20T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The parameter operationDate.fromDate must be later than or equal to the date 2024-01-01T00:00:00.000Z
+}
+
+docs {
+  Listar movimientos de una cuenta filtrando por fecha inicial menor a la fecha 2024-01-01
+
+  Caso SRCH-23 del plan de pruebas oficial. Esperado: HTTP 400.
+}

@@ -1,0 +1,34 @@
+meta {
+  name: SRCH-09 · Listar movimientos de una cuenta corriente dólares filtrando por fecha
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109854"],"operationDate":{"fromDate":"2024-11-12T00:00:00.000Z","toDate":"2024-11-21T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Listar movimientos de una cuenta corriente dólares filtrando por fecha inicial y final
+
+  Caso SRCH-09 del plan de pruebas oficial. Esperado: HTTP 200.
+}

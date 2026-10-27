@@ -1,0 +1,30 @@
+meta {
+  name: DTL-10 · Detalle de movimiento con número de cuenta con caracteres alfanumerico
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/accounts/0*110LK00105114732/transactions/PE00110201300105114734000000015
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The account number accepts only numbers.
+}
+
+docs {
+  Detalle de movimiento con número de cuenta con caracteres alfanumericos
+
+  Caso DTL-10 del plan de pruebas oficial. Esperado: HTTP 400.
+}

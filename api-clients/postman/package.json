@@ -1,0 +1,11 @@
+{
+  "name": "bbva-postman-collection",
+  "private": true,
+  "description": "BBVA Business Reconciliation \u2014 Postman collection. Requires the backend running (it performs the RSA signing).",
+  "scripts": {
+    "test": "newman run BBVA-Business-Reconciliation.postman_collection.json -e sandbox.postman_environment.json"
+  },
+  "devDependencies": {
+    "newman": "^6.2.2"
+  }
+}

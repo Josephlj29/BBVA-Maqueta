@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-01 · Listar movimientos de una cuenta que no tiene movimientos previos
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109862"]}
+}
+
+assert {
+  res.status: eq 200
+  res.body.messages[0].message: eq No transactions to show.
+}
+
+docs {
+  Listar movimientos de una cuenta que no tiene movimientos previos
+
+  Caso SRCH-01 del plan de pruebas oficial. Esperado: HTTP 200.
+}

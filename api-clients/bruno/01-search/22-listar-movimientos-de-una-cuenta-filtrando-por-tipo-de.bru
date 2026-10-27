@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-22 · Listar movimientos de una cuenta filtrando por tipo de movimiento invá
+  type: http
+  seq: 22
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300210515493"],"moneyFlow":"ENTRY"}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq Invalid moneyFlow value. Admitted: EXPENSE, INCOME.
+}
+
+docs {
+  Listar movimientos de una cuenta filtrando por tipo de movimiento inválido
+
+  Caso SRCH-22 del plan de pruebas oficial. Esperado: HTTP 400.
+}

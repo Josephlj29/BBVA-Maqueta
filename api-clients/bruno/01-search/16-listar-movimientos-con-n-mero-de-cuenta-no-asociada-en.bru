@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-16 · Listar movimientos con número de cuenta no asociada en API
+  type: http
+  seq: 16
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300210522600"]}
+}
+
+assert {
+  res.status: eq 403
+  res.body.messages[0].message: eq Access denied
+}
+
+docs {
+  Listar movimientos con número de cuenta no asociada en API
+
+  Caso SRCH-16 del plan de pruebas oficial. Esperado: HTTP 403.
+}

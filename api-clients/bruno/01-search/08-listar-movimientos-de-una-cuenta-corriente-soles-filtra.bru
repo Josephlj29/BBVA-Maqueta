@@ -1,0 +1,34 @@
+meta {
+  name: SRCH-08 · Listar movimientos de una cuenta corriente soles filtrando por tipo de
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105089306"],"moneyFlow":"EXPENSE","keyword":"612"}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Listar movimientos de una cuenta corriente soles filtrando por tipo de movimiento gasto y palabra clave
+
+  Caso SRCH-08 del plan de pruebas oficial. Esperado: HTTP 200.
+}

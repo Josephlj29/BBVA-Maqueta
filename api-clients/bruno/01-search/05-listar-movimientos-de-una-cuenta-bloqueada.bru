@@ -1,0 +1,34 @@
+meta {
+  name: SRCH-05 · Listar movimientos de una cuenta bloqueada
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109846"]}
+}
+
+assert {
+  res.status: eq 200
+}
+
+docs {
+  Listar movimientos de una cuenta bloqueada
+
+  Caso SRCH-05 del plan de pruebas oficial. Esperado: HTTP 200.
+}

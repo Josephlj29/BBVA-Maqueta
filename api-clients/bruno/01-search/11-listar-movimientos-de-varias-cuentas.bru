@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-11 · Listar movimientos de varias cuentas
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300301020152","001101300105114734"]}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq The number of contracts must be 1.
+}
+
+docs {
+  Listar movimientos de varias cuentas
+
+  Caso SRCH-11 del plan de pruebas oficial. Esperado: HTTP 400.
+}

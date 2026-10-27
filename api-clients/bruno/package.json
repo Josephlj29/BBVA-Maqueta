@@ -1,0 +1,12 @@
+{
+  "name": "bbva-bruno-collection",
+  "private": true,
+  "description": "BBVA Business Reconciliation \u2014 Bruno collection (41 sandbox test-plan cases)",
+  "scripts": {
+    "test": "bru run -r --env sandbox --sandbox developer",
+    "test:live": "bru run -r --env live --sandbox developer"
+  },
+  "devDependencies": {
+    "@usebruno/cli": "^4.0.0"
+  }
+}

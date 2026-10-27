@@ -1,0 +1,101 @@
+auth {
+  mode: none
+}
+
+script:pre-request {
+  const crypto = require('crypto');
+
+  /*
+   * BBVA API Connect two-legged (B2B) message signature.
+   *
+   *   digest       = "SHA-512=" + base64(SHA512(body))      // "" for bodyless requests
+   *   stringToSign = "(request-target):{method} {path}\n"
+   *                  "host:{host}\ndate:{rfc1123}\ndigest:{digest}"
+   *   Signature    = algorithm="rsa-sha512",headers="(request-target) host date digest",
+   *                  signature="{base64(RSA-PKCS1v15-SHA512(stringToSign))}"
+   *
+   * Three details are load bearing: the separator is LF and never CRLF, the method is
+   * lowercased, and the query string is excluded from the signed path. Get any of them
+   * wrong and BBVA answers 401 with no explanation.
+   */
+
+  const url = req.getUrl();
+
+  // The token endpoint authenticates with the client secret and must NOT be signed.
+  if (!url.endsWith('token')) {
+    const readVar = (name) => bru.getEnvVar(name) || bru.getProcessEnv(name);
+
+    const clientKey = readVar('BBVA_PRIVATE_KEY_BASE64');
+    if (!clientKey) {
+      throw new Error(
+        'Missing BBVA_PRIVATE_KEY_BASE64. Set it in your shell (or a .env file next to ' +
+        'bruno.json) to the base64 of your PEM private key. Never commit the key itself.'
+      );
+    }
+
+    const baseUrl = readVar('baseUrl');
+    if (!baseUrl) {
+      throw new Error('Missing baseUrl. Select an environment before sending.');
+    }
+
+    const host = baseUrl.split('/')[2];
+
+    /*
+     * Derive the signed path.
+     *
+     * `req.getUrl()` may hand back either the raw template ("{{baseUrl}}/pe/...") or an
+     * already-resolved absolute URL, depending on Bruno version and how the request was
+     * launched. Resolve placeholders first, then normalise both shapes to a bare path —
+     * assuming one shape is exactly how this signature ends up covering the wrong target,
+     * and BBVA reports that only as "Invalid Signature".
+     */
+    let path = url.replace(/{{(.*?)}}/g, (_, name) => readVar(name.trim()) ?? '');
+
+    if (/^https?:\/\//i.test(path)) {
+      path = '/' + path.split('/').slice(3).join('/');
+    } else if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+
+    path = path.split('?')[0];
+
+    const body = req.getBody();
+    const payload = body ? (typeof body === 'string' ? body : JSON.stringify(body)) : '';
+
+    const digest = 'SHA-512=' + crypto.createHash('sha512').update(payload, 'utf8').digest('base64');
+    const date = new Date().toUTCString();
+
+    const stringToSign =
+      `(request-target):${req.getMethod().toLowerCase()} ${path}\n` +
+      `host:${host}\n` +
+      `date:${date}\n` +
+      `digest:${digest}`;
+
+    // Accept the key with or without PEM armor; re-wrap the body at 64 characters.
+    const decoded = Buffer.from(clientKey, 'base64').toString('utf-8').trim();
+    const pem = decoded.includes('-----BEGIN')
+      ? decoded
+      : '-----BEGIN PRIVATE KEY-----\n' +
+        decoded.replace(/\s+/g, '').match(/.{1,64}/g).join('\n') +
+        '\n-----END PRIVATE KEY-----';
+
+    const signer = crypto.createSign('RSA-SHA512');
+    signer.update(stringToSign, 'utf-8');
+    signer.end();
+
+    const signature =
+      'algorithm="rsa-sha512",headers="(request-target) host date digest",' +
+      `signature="${signer.sign(pem, 'base64')}"`;
+
+    bru.setEnvVar('Digest', digest);
+    bru.setEnvVar('Date', date);
+    bru.setEnvVar('Host', host);
+    bru.setEnvVar('Signature', signature);
+
+    // Set BBVA_DEBUG_SIGNING=1 to print exactly what was signed. BBVA answers a bad
+    // signature with a bare 401 and no detail, so this is the only way to compare.
+    if (readVar('BBVA_DEBUG_SIGNING')) {
+      console.log('--- stringToSign ---\n' + stringToSign + '\n--------------------');
+    }
+  }
+}

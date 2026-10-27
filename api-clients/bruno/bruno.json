@@ -1,0 +1,19 @@
+{
+  "version": "1",
+  "name": "BBVA Business Reconciliation",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git",
+    ".env"
+  ],
+  "scripts": {
+    "moduleWhitelist": [
+      "crypto"
+    ],
+    "filesystemAccess": {
+      "allow": true
+    },
+    "sandbox": "developer"
+  }
+}

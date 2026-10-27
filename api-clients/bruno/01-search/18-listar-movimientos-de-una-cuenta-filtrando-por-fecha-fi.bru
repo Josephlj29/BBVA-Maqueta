@@ -1,0 +1,35 @@
+meta {
+  name: SRCH-18 · Listar movimientos de una cuenta filtrando por fecha final con formato
+  type: http
+  seq: 18
+}
+
+post {
+  url: {{baseUrl}}/pe/business-reconciliation/v1/transactions/search
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+  Digest: {{Digest}}
+  Signature: {{Signature}}
+  Date: {{Date}}
+  Host: {{Host}}
+  Content-Type: application/json
+}
+
+body:json {
+  {"contracts":["001101300105109811"],"operationDate":{"fromDate":"2024-09-11T00:00:00.000Z","toDate":"2024/11-06T00:00:00.000Z"}}
+}
+
+assert {
+  res.status: eq 400
+  res.body.messages[0].message: eq Invalid format for parameter operationDate.toDate. Correct format: yyyy-MM-ddTHH:mm:ss.SSSZ
+}
+
+docs {
+  Listar movimientos de una cuenta filtrando por fecha final con formato inválido
+
+  Caso SRCH-18 del plan de pruebas oficial. Esperado: HTTP 400.
+}
