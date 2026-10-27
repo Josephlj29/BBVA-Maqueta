@@ -1,0 +1,285 @@
+<div class="space-y-5">
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div>
+      <h1 class="text-xl font-semibold tracking-tight">Plan de pruebas Sandbox</h1>
+      <p class="mt-1 max-w-3xl text-sm text-muted-foreground">
+        Los casos del plan oficial de BBVA, ejecutados contra el sandbox real y comparados
+        contra la respuesta documentada. Esto es la evidencia de certificación.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        (click)="runAll()"
+        [disabled]="isRunningAll() || !cases().length"
+        class="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4
+               text-sm font-medium text-primary-foreground shadow-xs transition-colors
+               hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2
+               focus-visible:ring-ring disabled:opacity-60"
+      >
+        @if (isRunningAll()) {
+          <svg class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity=".25" />
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3"
+                  stroke-linecap="round" />
+          </svg>
+          {{ progress().done }}/{{ progress().total }}
+        } @else {
+          Ejecutar todos
+        }
+      </button>
+
+      @if (summary().executed) {
+        <button
+          type="button"
+          (click)="downloadReport()"
+          class="inline-flex h-9 items-center justify-center rounded-md border border-border px-3
+                 text-sm font-medium transition-colors hover:bg-accent
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Descargar reporte
+        </button>
+        <app-copy-button [value]="buildReport()" label="Markdown" />
+      }
+    </div>
+  </div>
+
+  @if (plan.isLoading()) {
+    <div class="rounded-xl border border-border p-8 text-center text-sm text-muted-foreground">
+      Cargando el plan de pruebas…
+    </div>
+  } @else if (plan.error()) {
+    <div class="rounded-xl border border-destructive/30 bg-destructive/5 p-4" role="alert">
+      <p class="text-sm font-medium text-destructive">No se pudo cargar el plan de pruebas.</p>
+      <p class="mt-1 text-xs text-muted-foreground">
+        Verificá que el backend esté corriendo y que
+        <code class="rounded bg-muted px-1">Sandbox:TestPlanPath</code> apunte al fixture.
+      </p>
+    </div>
+  } @else if (plan.hasValue()) {
+    <!-- ── Resumen ─────────────────────────────────────────────────────────── -->
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="rounded-xl border border-border bg-card p-4">
+        <p class="text-[11px] uppercase tracking-wide text-muted-foreground">Casos</p>
+        <p class="font-numeric mt-1 text-2xl font-semibold">
+          {{ summary().executed }}<span class="text-base text-muted-foreground">/{{ summary().total }}</span>
+        </p>
+      </div>
+
+      @for (stat of [
+        { label: 'Coinciden', value: summary().Passed, tone: 'text-pass' },
+        { label: 'Difieren', value: summary().Drifted, tone: 'text-drift' },
+        { label: 'Fallan', value: summary().Failed, tone: 'text-fail' },
+        { label: 'Con error', value: summary().Errored, tone: 'text-fail' }
+      ]; track stat.label) {
+        <div class="rounded-xl border border-border bg-card p-4">
+          <p class="text-[11px] uppercase tracking-wide text-muted-foreground">{{ stat.label }}</p>
+          <p class="font-numeric mt-1 text-2xl font-semibold" [class]="stat.tone">
+            {{ stat.value }}
+          </p>
+        </div>
+      }
+    </div>
+
+    @if (isCertified()) {
+      <div class="flex items-center gap-3 rounded-xl border border-pass/30 bg-pass-muted p-4">
+        <svg class="size-5 shrink-0 text-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+        <p class="text-sm text-pass">
+          Los {{ summary().total }} casos del plan devolvieron el código de estado documentado.
+          La integración reproduce el comportamiento que BBVA especifica.
+        </p>
+      </div>
+    }
+
+    <!-- ── Controles ───────────────────────────────────────────────────────── -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex gap-1" role="tablist" aria-label="Filtrar casos">
+        @for (option of [
+          { id: 'all', label: 'Todos' },
+          { id: 'search', label: 'Listado' },
+          { id: 'detail', label: 'Detalle' },
+          { id: 'failing', label: 'Con hallazgos' }
+        ]; track option.id) {
+          <button
+            type="button"
+            role="tab"
+            [attr.aria-selected]="filter() === option.id"
+            (click)="filter.set($any(option.id))"
+            class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
+            [class]="
+              filter() === option.id
+                ? 'bg-secondary text-secondary-foreground'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            "
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+
+      <label class="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
+        <input
+          type="checkbox"
+          [checked]="compareVolatile()"
+          (change)="compareVolatile.set($any($event.target).checked)"
+          class="size-4 rounded border-input accent-primary"
+        />
+        Comparar también importes, saldos y fechas
+        <span
+          class="cursor-help text-muted-foreground/70"
+          title="El workbook capturó esos valores en un momento dado y el sandbox los sigue
+                 moviendo. Compararlos pinta todo de rojo y tapa lo que sí importa: códigos de
+                 estado, mensajes de error y forma de la respuesta."
+          aria-hidden="true"
+        >ⓘ</span>
+      </label>
+    </div>
+
+    <!-- ── Casos ───────────────────────────────────────────────────────────── -->
+    <div class="overflow-hidden rounded-xl border border-border bg-card">
+      @for (testCase of visibleCases(); track testCase.id) {
+        @let result = resultFor(testCase.id);
+
+        <div class="border-b border-border last:border-0">
+          <div class="flex items-center gap-3 px-4 py-2.5">
+            <span
+              class="rounded-md px-2 py-0.5 text-[11px] font-medium ring-1 ring-inset"
+              [class]="outcomeTone(result?.outcome)"
+            >
+              {{ outcomeLabel(result?.outcome) }}
+            </span>
+
+            <code class="font-numeric shrink-0 text-xs text-muted-foreground">{{ testCase.id }}</code>
+
+            <button
+              type="button"
+              (click)="toggle(testCase.id)"
+              class="min-w-0 flex-1 truncate text-left text-sm hover:underline
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              [attr.aria-expanded]="expanded() === testCase.id"
+              [attr.title]="testCase.description"
+            >
+              {{ testCase.description }}
+            </button>
+
+            <span class="font-numeric hidden shrink-0 text-xs text-muted-foreground sm:inline">
+              {{ testCase.expectedStatusCode }}
+              @if (result) {
+                <span [class]="result.statusMatches ? 'text-pass' : 'text-fail'">
+                  → {{ result.actualStatusCode }}
+                </span>
+              }
+            </span>
+
+            @if (result && result.differences.length) {
+              <span class="font-numeric shrink-0 text-xs text-drift">
+                {{ result.differences.length }} dif
+              </span>
+            }
+
+            @if (result) {
+              <span class="font-numeric hidden w-14 shrink-0 text-right text-xs
+                           text-muted-foreground md:inline">
+                {{ result.elapsedMilliseconds }} ms
+              </span>
+            }
+
+            <button
+              type="button"
+              (click)="runOne(testCase)"
+              [disabled]="isRunning(testCase.id) || isRunningAll()"
+              class="shrink-0 rounded-md border border-border px-2 py-1 text-xs
+                     transition-colors hover:bg-accent focus-visible:outline-none
+                     focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
+            >
+              {{ isRunning(testCase.id) ? '…' : 'Correr' }}
+            </button>
+          </div>
+
+          @if (expanded() === testCase.id) {
+            <div class="space-y-4 border-t border-border bg-muted/20 p-4">
+              <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground">
+                <span><strong class="text-foreground">{{ testCase.method }}</strong> {{ testCase.path }}</span>
+                @if (testCase.pathParameters) {
+                  @for (entry of testCase.pathParameters | keyvalue; track entry.key) {
+                    <span class="font-numeric">{{ entry.key }}: {{ entry.value }}</span>
+                  }
+                }
+              </div>
+
+              @if (testCase.requestBody) {
+                <div>
+                  <p class="mb-1.5 text-xs font-medium text-muted-foreground">Request</p>
+                  <app-json-viewer [value]="testCase.requestBody" maxHeight="12rem" />
+                </div>
+              }
+
+              @if (result && result.differences.length) {
+                <div>
+                  <p class="mb-1.5 text-xs font-medium text-drift">
+                    Diferencias ({{ result.differences.length }})
+                  </p>
+                  <div class="overflow-x-auto rounded-lg border border-border">
+                    <table class="w-full text-xs">
+                      <thead>
+                        <tr class="border-b border-border text-left text-muted-foreground">
+                          <th scope="col" class="px-3 py-1.5 font-medium">Campo</th>
+                          <th scope="col" class="px-3 py-1.5 font-medium">Esperado</th>
+                          <th scope="col" class="px-3 py-1.5 font-medium">Obtenido</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (difference of result.differences; track difference.path) {
+                          <tr class="border-b border-border/50 last:border-0">
+                            <td class="px-3 py-1.5 font-mono">{{ difference.path }}</td>
+                            <td class="px-3 py-1.5 font-mono text-muted-foreground">
+                              {{ difference.expected ?? '—' }}
+                            </td>
+                            <td class="px-3 py-1.5 font-mono">{{ difference.actual ?? '—' }}</td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+
+              <div class="grid gap-4 lg:grid-cols-2">
+                <div>
+                  <p class="mb-1.5 text-xs font-medium text-muted-foreground">
+                    Esperado (documentación)
+                  </p>
+                  <app-json-viewer [value]="testCase.expectedResponse" maxHeight="18rem" />
+                </div>
+                <div>
+                  <p class="mb-1.5 text-xs font-medium text-muted-foreground">Obtenido (sandbox)</p>
+                  @if (result) {
+                    <app-json-viewer [value]="result.actualResponse" maxHeight="18rem" />
+                  } @else {
+                    <div class="rounded-lg border border-dashed border-border p-6 text-center
+                                text-xs text-muted-foreground">
+                      Todavía no se ejecutó este caso.
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @empty {
+        <p class="p-8 text-center text-sm text-muted-foreground">
+          No hay casos que coincidan con este filtro.
+        </p>
+      }
+    </div>
+
+    <p class="text-xs text-muted-foreground">
+      Fuente: {{ plan.value()!.source }} · {{ plan.value()!.totalCases }} casos ·
+      {{ plan.value()!.totalRequests }} requests · {{ plan.value()!.sandboxBaseUrl }}
+    </p>
+  }
+</div>

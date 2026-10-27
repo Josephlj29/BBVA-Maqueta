@@ -1,0 +1,222 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
+
+@import 'tw-animate-css';
+@import '@spartan-ng/brain/hlm-tailwind-preset.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design tokens.
+ *
+ * Structure and token names follow the Spartan/shadcn contract, so every generated helm
+ * component themes correctly. Two deliberate departures from the stock slate theme:
+ *
+ * 1. The primary is a deep banking navy rather than near-black. This is a financial
+ *    reconciliation console; the accent has to carry meaning into status chips and
+ *    controls, and a neutral primary reads as "no signal".
+ *
+ * 2. Income, expense and the three sandbox outcomes get their own semantic tokens rather
+ *    than raw green-600 / red-600 utilities. A movement being money in or money out is
+ *    domain meaning, not decoration, and the two need different lightness in dark mode to
+ *    stay legible without turning neon.
+ */
+:root {
+  color-scheme: light;
+
+  --radius: 0.625rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0.03 258);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.03 258);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.03 258);
+
+  --primary: oklch(0.42 0.11 250);
+  --primary-foreground: oklch(0.98 0.005 250);
+
+  --secondary: oklch(0.96 0.008 250);
+  --secondary-foreground: oklch(0.25 0.04 254);
+
+  --muted: oklch(0.96 0.008 250);
+  --muted-foreground: oklch(0.52 0.02 256);
+
+  --accent: oklch(0.95 0.02 240);
+  --accent-foreground: oklch(0.25 0.04 254);
+
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.98 0.01 27);
+
+  --border: oklch(0.91 0.01 255);
+  --input: oklch(0.91 0.01 255);
+  --ring: oklch(0.42 0.11 250);
+
+  --sidebar: oklch(0.98 0.005 250);
+  --sidebar-foreground: oklch(0.16 0.03 258);
+  --sidebar-primary: oklch(0.42 0.11 250);
+  --sidebar-primary-foreground: oklch(0.98 0.005 250);
+  --sidebar-accent: oklch(0.95 0.02 240);
+  --sidebar-accent-foreground: oklch(0.25 0.04 254);
+  --sidebar-border: oklch(0.91 0.01 255);
+  --sidebar-ring: oklch(0.42 0.11 250);
+
+  /* Semantic money-flow colours. */
+  --income: oklch(0.52 0.14 152);
+  --income-foreground: oklch(0.98 0.02 152);
+  --income-muted: oklch(0.95 0.04 152);
+
+  --expense: oklch(0.55 0.19 25);
+  --expense-foreground: oklch(0.98 0.02 25);
+  --expense-muted: oklch(0.96 0.03 25);
+
+  /* Sandbox runner outcomes: matched, shape-matched but values moved, wrong status. */
+  --pass: oklch(0.52 0.14 152);
+  --pass-muted: oklch(0.95 0.04 152);
+  --drift: oklch(0.62 0.13 75);
+  --drift-muted: oklch(0.96 0.05 85);
+  --fail: oklch(0.55 0.19 25);
+  --fail-muted: oklch(0.96 0.03 25);
+}
+
+:root.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.16 0.02 258);
+  --foreground: oklch(0.97 0.005 250);
+
+  --card: oklch(0.21 0.025 258);
+  --card-foreground: oklch(0.97 0.005 250);
+
+  --popover: oklch(0.21 0.025 258);
+  --popover-foreground: oklch(0.97 0.005 250);
+
+  --primary: oklch(0.68 0.13 245);
+  --primary-foreground: oklch(0.16 0.03 258);
+
+  --secondary: oklch(0.27 0.03 258);
+  --secondary-foreground: oklch(0.97 0.005 250);
+
+  --muted: oklch(0.27 0.03 258);
+  --muted-foreground: oklch(0.71 0.02 256);
+
+  --accent: oklch(0.3 0.04 250);
+  --accent-foreground: oklch(0.97 0.005 250);
+
+  --destructive: oklch(0.66 0.19 25);
+  --destructive-foreground: oklch(0.16 0.03 258);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.68 0.13 245);
+
+  --sidebar: oklch(0.19 0.025 258);
+  --sidebar-foreground: oklch(0.97 0.005 250);
+  --sidebar-primary: oklch(0.68 0.13 245);
+  --sidebar-primary-foreground: oklch(0.16 0.03 258);
+  --sidebar-accent: oklch(0.3 0.04 250);
+  --sidebar-accent-foreground: oklch(0.97 0.005 250);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.68 0.13 245);
+
+  --income: oklch(0.74 0.16 155);
+  --income-foreground: oklch(0.16 0.03 258);
+  --income-muted: oklch(0.3 0.06 155);
+
+  --expense: oklch(0.72 0.16 25);
+  --expense-foreground: oklch(0.16 0.03 258);
+  --expense-muted: oklch(0.3 0.07 25);
+
+  --pass: oklch(0.74 0.16 155);
+  --pass-muted: oklch(0.3 0.06 155);
+  --drift: oklch(0.8 0.14 80);
+  --drift-muted: oklch(0.32 0.06 80);
+  --fail: oklch(0.72 0.16 25);
+  --fail-muted: oklch(0.3 0.07 25);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-income: var(--income);
+  --color-income-foreground: var(--income-foreground);
+  --color-income-muted: var(--income-muted);
+  --color-expense: var(--expense);
+  --color-expense-foreground: var(--expense-foreground);
+  --color-expense-muted: var(--expense-muted);
+
+  --color-pass: var(--pass);
+  --color-pass-muted: var(--pass-muted);
+  --color-drift: var(--drift);
+  --color-drift-muted: var(--drift-muted);
+  --color-fail: var(--fail);
+  --color-fail-muted: var(--fail-muted);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+
+  /*
+   * Account numbers, transaction ids and signatures get compared character by character
+   * far more often than they get read as prose. Tabular figures keep digits in fixed
+   * columns so a transposed digit is visible rather than merely present.
+   */
+  .font-numeric {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Long opaque values — signatures, digests, cursors — wrap instead of overflowing. */
+  .break-value {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}

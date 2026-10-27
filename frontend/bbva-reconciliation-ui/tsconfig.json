@@ -1,0 +1,50 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "paths": {
+      "@ui/button": ["./src/app/shared/ui/button/src/index.ts"],
+      "@ui/utils": ["./src/app/shared/ui/utils/src/index.ts"],
+      "@ui/card": ["./src/app/shared/ui/card/src/index.ts"],
+      "@ui/input": ["./src/app/shared/ui/input/src/index.ts"],
+      "@ui/label": ["./src/app/shared/ui/label/src/index.ts"],
+      "@ui/select": ["./src/app/shared/ui/select/src/index.ts"],
+      "@ui/table": ["./src/app/shared/ui/table/src/index.ts"],
+      "@ui/badge": ["./src/app/shared/ui/badge/src/index.ts"],
+      "@ui/skeleton": ["./src/app/shared/ui/skeleton/src/index.ts"],
+      "@ui/alert": ["./src/app/shared/ui/alert/src/index.ts"],
+      "@ui/sheet": ["./src/app/shared/ui/sheet/src/index.ts"],
+      "@ui/tabs": ["./src/app/shared/ui/tabs/src/index.ts"],
+      "@ui/separator": ["./src/app/shared/ui/separator/src/index.ts"],
+      "@ui/switch": ["./src/app/shared/ui/switch/src/index.ts"],
+      "@ui/spinner": ["./src/app/shared/ui/spinner/src/index.ts"],
+      "@ui/sonner": ["./src/app/shared/ui/sonner/src/index.ts"],
+      "@ui/tooltip": ["./src/app/shared/ui/tooltip/src/index.ts"],
+      "@ui/popover": ["./src/app/shared/ui/popover/src/index.ts"],
+      "@ui/checkbox": ["./src/app/shared/ui/checkbox/src/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

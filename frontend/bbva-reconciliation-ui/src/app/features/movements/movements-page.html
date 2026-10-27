@@ -1,0 +1,389 @@
+<div class="space-y-5">
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h1 class="text-xl font-semibold tracking-tight">Movimientos de cuenta</h1>
+      <p class="mt-1 text-sm text-muted-foreground">
+        <code class="rounded bg-muted px-1 py-0.5 text-xs">POST /transactions/search</code>
+        — un contrato de 18 dígitos por consulta.
+      </p>
+    </div>
+
+    @if (movements().length) {
+      <div class="flex items-center gap-4 text-sm">
+        <div class="text-right">
+          <div class="text-[11px] uppercase tracking-wide text-muted-foreground">Ingresos</div>
+          <app-money-amount [amount]="totals().income" [currency]="currencyOfResults()" flow="INCOME" />
+        </div>
+        <div class="text-right">
+          <div class="text-[11px] uppercase tracking-wide text-muted-foreground">Egresos</div>
+          <app-money-amount [amount]="totals().expense" [currency]="currencyOfResults()" flow="EXPENSE" />
+        </div>
+        <div class="border-l border-border pl-4 text-right">
+          <div class="text-[11px] uppercase tracking-wide text-muted-foreground">Neto</div>
+          <app-money-amount
+            [amount]="totals().net"
+            [currency]="currencyOfResults()"
+            [flow]="totals().net < 0 ? 'EXPENSE' : 'INCOME'"
+          />
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- ── Filtros ─────────────────────────────────────────────────────────── -->
+  <form [formGroup]="form" (ngSubmit)="search()" class="rounded-xl border border-border bg-card p-4">
+    <div class="grid gap-4 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <label for="contract" class="mb-1.5 block text-sm font-medium">
+          Contrato <span class="text-destructive" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="contract"
+          formControlName="contract"
+          inputmode="numeric"
+          maxlength="18"
+          autocomplete="off"
+          placeholder="001101300210484377"
+          class="font-numeric h-9 w-full rounded-md border border-input bg-background px-3 text-sm
+                 shadow-xs transition-colors placeholder:text-muted-foreground
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                 aria-[invalid=true]:border-destructive"
+          [attr.aria-invalid]="!!fieldError('contract')"
+          [attr.aria-describedby]="fieldError('contract') ? 'contract-error' : 'contract-hint'"
+        />
+        @if (fieldError('contract'); as message) {
+          <p id="contract-error" class="mt-1.5 text-xs text-destructive" role="alert">{{ message }}</p>
+        } @else {
+          <p id="contract-hint" class="mt-1.5 text-xs text-muted-foreground">
+            {{ form.controls.contract.value.length }}/18 dígitos
+          </p>
+        }
+      </div>
+
+      <div class="lg:col-span-2">
+        <label for="moneyFlow" class="mb-1.5 block text-sm font-medium">Flujo</label>
+        <select
+          id="moneyFlow"
+          formControlName="moneyFlow"
+          class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <option value="">Todos</option>
+          <option value="INCOME">Ingresos</option>
+          <option value="EXPENSE">Egresos</option>
+        </select>
+      </div>
+
+      <div class="lg:col-span-2">
+        <label for="currency" class="mb-1.5 block text-sm font-medium">Moneda</label>
+        <select
+          id="currency"
+          formControlName="currency"
+          class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <option value="">Todas</option>
+          <option value="PEN">PEN</option>
+          <option value="USD">USD</option>
+        </select>
+      </div>
+
+      <div class="lg:col-span-2">
+        <label for="fromDate" class="mb-1.5 block text-sm font-medium">Desde</label>
+        <input
+          id="fromDate"
+          type="date"
+          formControlName="fromDate"
+          [min]="minimumDate"
+          [max]="maximumDate"
+          class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        />
+      </div>
+
+      <div class="lg:col-span-2">
+        <label for="toDate" class="mb-1.5 block text-sm font-medium">Hasta</label>
+        <input
+          id="toDate"
+          type="date"
+          formControlName="toDate"
+          [min]="minimumDate"
+          [max]="maximumDate"
+          class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        />
+      </div>
+
+      <div class="lg:col-span-8">
+        <label for="keyword" class="mb-1.5 block text-sm font-medium">Palabra clave</label>
+        <input
+          id="keyword"
+          formControlName="keyword"
+          autocomplete="off"
+          placeholder="traspaso, 612, SEDAPAL…"
+          class="h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-xs
+                 placeholder:text-muted-foreground focus-visible:outline-none
+                 focus-visible:ring-2 focus-visible:ring-ring"
+        />
+      </div>
+
+      <div class="lg:col-span-2">
+        <label for="pageSize" class="mb-1.5 block text-sm font-medium">Por página</label>
+        <input
+          id="pageSize"
+          type="number"
+          min="1"
+          formControlName="pageSize"
+          placeholder="50"
+          class="font-numeric h-9 w-full rounded-md border border-input bg-background px-3 text-sm
+                 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          [attr.aria-invalid]="!!fieldError('pageSize')"
+        />
+        @if (fieldError('pageSize'); as message) {
+          <p class="mt-1.5 text-xs text-destructive" role="alert">{{ message }}</p>
+        }
+      </div>
+
+      <div class="flex items-end gap-2 lg:col-span-2">
+        <button
+          type="submit"
+          [disabled]="isSearching()"
+          class="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-md bg-primary px-4
+                 text-sm font-medium text-primary-foreground shadow-xs transition-colors
+                 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2
+                 focus-visible:ring-ring disabled:opacity-60"
+        >
+          @if (isSearching()) {
+            <svg class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity=".25" />
+              <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" />
+            </svg>
+            Buscando
+          } @else {
+            Buscar
+          }
+        </button>
+
+        <button
+          type="button"
+          (click)="reset()"
+          class="inline-flex h-9 items-center justify-center rounded-md border border-border px-3
+                 text-sm font-medium transition-colors hover:bg-accent
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Limpiar
+        </button>
+      </div>
+    </div>
+
+    @if (formError(); as message) {
+      <p class="mt-3 rounded-md bg-destructive/10 px-3 py-2 text-xs text-destructive" role="alert">
+        {{ message }}
+      </p>
+    }
+
+    <!-- Los 18 dígitos a mano son una transposición esperando pasar. -->
+    <div class="mt-4 border-t border-border pt-3">
+      <p class="mb-2 text-xs font-medium text-muted-foreground">Contratos del sandbox</p>
+      <div class="flex flex-wrap gap-1.5">
+        @for (item of contracts; track item.number) {
+          <button
+            type="button"
+            (click)="pickContract(item.number)"
+            class="rounded-md border px-2 py-1 text-xs transition-colors
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            [class]="
+              form.controls.contract.value === item.number
+                ? 'border-primary bg-primary/10 text-primary'
+                : 'border-border text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            "
+            [attr.title]="item.number + (item.note ? ' — ' + item.note : '')"
+          >
+            {{ item.label }}
+            <span class="ml-1 text-[10px] opacity-70">{{ item.currency }}</span>
+            @if (item.accessDenied) {
+              <span class="ml-1 text-fail" aria-label="Devuelve 403">403</span>
+            }
+            @if (item.empty) {
+              <span class="ml-1 opacity-70" aria-label="Sin movimientos">∅</span>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  <!-- ── Error ───────────────────────────────────────────────────────────── -->
+  @if (error(); as failure) {
+    <div
+      class="rounded-xl border border-destructive/30 bg-destructive/5 p-4"
+      role="alert"
+    >
+      <div class="flex items-start gap-3">
+        <svg class="mt-0.5 size-5 shrink-0 text-destructive" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" /><path d="M12 8v5M12 16h.01" stroke-linecap="round" />
+        </svg>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-destructive">
+            HTTP {{ failure.status }} · {{ failure.code }}
+          </p>
+          <p class="mt-0.5 text-sm">{{ failure.message }}</p>
+          @if (failure.isAccessDenied) {
+            <p class="mt-2 text-xs text-muted-foreground">
+              BBVA no asoció este contrato a la API. No es un problema de formato: el número es
+              válido, pero no está habilitado para estas credenciales.
+            </p>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ── Vacío ───────────────────────────────────────────────────────────── -->
+  @if (isEmpty() && !error()) {
+    <div class="rounded-xl border border-dashed border-border py-14 text-center">
+      <svg class="mx-auto size-10 text-muted-foreground/60" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" />
+      </svg>
+      <p class="mt-3 text-sm font-medium">
+        {{ page()?.infoMessage ?? 'No transactions to show.' }}
+      </p>
+      <p class="mx-auto mt-1 max-w-md text-xs text-muted-foreground">
+        BBVA respondió <strong class="text-foreground">200 OK</strong>: la cuenta existe y está
+        habilitada, simplemente no hay movimientos que coincidan con estos filtros.
+      </p>
+    </div>
+  }
+
+  <!-- ── Resultados ──────────────────────────────────────────────────────── -->
+  @if (movements().length) {
+    <div class="overflow-hidden rounded-xl border border-border bg-card">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-2.5">
+        <p class="text-sm text-muted-foreground">
+          <strong class="font-medium text-foreground">{{ movements().length }}</strong>
+          @if (page()?.pagination?.totalElements; as total) {
+            de {{ total }}
+          }
+          movimiento{{ movements().length === 1 ? '' : 's' }}
+        </p>
+
+        <button
+          type="button"
+          (click)="showRawJson.set(!showRawJson())"
+          class="rounded-md border border-border px-2 py-1 text-xs text-muted-foreground
+                 transition-colors hover:bg-accent focus-visible:outline-none
+                 focus-visible:ring-2 focus-visible:ring-ring"
+          [attr.aria-pressed]="showRawJson()"
+        >
+          {{ showRawJson() ? 'Ver tabla' : 'Ver JSON' }}
+        </button>
+      </div>
+
+      @if (showRawJson()) {
+        <div class="p-4">
+          <app-json-viewer [value]="page()" maxHeight="36rem" />
+        </div>
+      } @else {
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <caption class="sr-only">Movimientos del contrato consultado</caption>
+            <thead>
+              <tr class="border-b border-border text-left text-xs text-muted-foreground">
+                <th scope="col" class="px-4 py-2.5 font-medium">Fecha</th>
+                <th scope="col" class="px-4 py-2.5 font-medium">Concepto</th>
+                <th scope="col" class="px-4 py-2.5 font-medium">Descripción</th>
+                <th scope="col" class="px-4 py-2.5 text-right font-medium">Importe</th>
+                <th scope="col" class="px-4 py-2.5 text-right font-medium">Saldo posterior</th>
+                <th scope="col" class="px-4 py-2.5 font-medium">Estado</th>
+                <th scope="col" class="px-4 py-2.5"><span class="sr-only">Detalle</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (movement of movements(); track movement.id) {
+                <tr
+                  class="cursor-pointer border-b border-border/60 transition-colors last:border-0
+                         hover:bg-accent/40"
+                  (click)="select(movement)"
+                  tabindex="0"
+                  (keydown.enter)="select(movement)"
+                  (keydown.space)="select(movement); $event.preventDefault()"
+                >
+                  <td class="font-numeric whitespace-nowrap px-4 py-2.5 text-muted-foreground">
+                    {{ movement.operation.date | date: 'dd/MM/yyyy' }}
+                  </td>
+                  <td class="px-4 py-2.5">
+                    <span class="font-numeric text-xs text-muted-foreground">
+                      {{ movement.concept.id }}
+                    </span>
+                    <span class="ml-1.5">{{ movement.concept.name }}</span>
+                  </td>
+                  <td class="max-w-[22rem] truncate px-4 py-2.5 text-muted-foreground"
+                      [attr.title]="movement.comments">
+                    {{ movement.comments }}
+                  </td>
+                  <td class="whitespace-nowrap px-4 py-2.5 text-right">
+                    <app-money-amount
+                      [amount]="movement.transaction.amount"
+                      [currency]="movement.transaction.currency"
+                      [flow]="movement.moneyFlow"
+                      [showCurrency]="false"
+                    />
+                  </td>
+                  <td class="font-numeric whitespace-nowrap px-4 py-2.5 text-right text-muted-foreground">
+                    <app-money-amount
+                      [amount]="movement.postedBalance.amount"
+                      [currency]="movement.postedBalance.currency"
+                    />
+                  </td>
+                  <td class="px-4 py-2.5">
+                    <app-status-badge [status]="movement.status" [isKnown]="movement.isKnownStatus" />
+                  </td>
+                  <td class="px-4 py-2.5 text-right text-muted-foreground">
+                    <svg class="inline size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @if (hasNext()) {
+        <div class="border-t border-border p-3 text-center">
+          <button
+            type="button"
+            (click)="loadMore()"
+            [disabled]="isLoadingMore()"
+            class="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-border
+                   px-4 text-sm font-medium transition-colors hover:bg-accent
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                   disabled:opacity-60"
+          >
+            {{ isLoadingMore() ? 'Cargando…' : 'Cargar más' }}
+          </button>
+          <!-- El cursor es opaco y unidireccional: no se puede saltar a la página N. -->
+          <p class="mt-2 text-[11px] text-muted-foreground">
+            Cursor
+            <code class="font-numeric rounded bg-muted px-1">{{ page()?.pagination?.next }}</code>
+          </p>
+        </div>
+      }
+    </div>
+
+    @if (page()?.pagination?.next; as cursor) {
+      <div class="flex justify-end">
+        <app-copy-button [value]="cursor" label="Copiar paginationKey" />
+      </div>
+    }
+  }
+</div>
+
+@if (selected(); as movement) {
+  <app-movement-detail-panel [movement]="movement" (closed)="closeDetail()" />
+}
