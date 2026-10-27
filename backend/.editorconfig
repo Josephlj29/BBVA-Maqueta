@@ -1,0 +1,43 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml,bru}]
+indent_size = 2
+
+[*.{csproj,props,targets,slnx}]
+indent_size = 2
+
+[*.cs]
+# ---------------------------------------------------------------------------
+# Style
+# ---------------------------------------------------------------------------
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_prefer_braces = true:warning
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:warning
+dotnet_style_readonly_field = true:warning
+csharp_style_prefer_primary_constructors = true:suggestion
+
+# ---------------------------------------------------------------------------
+# Deliberate analyzer deviations. Each one is a decision, not noise suppression.
+# ---------------------------------------------------------------------------
+
+# CA1000: static members on generic types.
+# Result<T>.Success / Result<T>.Failure are the canonical factory API for a result
+# type; routing them through a non-generic helper would lose type inference at every
+# call site. The non-generic `Result` class exists for the cases where inference works.
+dotnet_diagnostic.CA1000.severity = none
+
+# CA1707: underscores in identifiers.
+# Test method names use snake_case so failure output reads as a sentence.
+[tests/**/*.cs]
+dotnet_diagnostic.CA1707.severity = none
+# CA1861: constant arrays as arguments — InlineData attributes are not hot paths.
+dotnet_diagnostic.CA1861.severity = none

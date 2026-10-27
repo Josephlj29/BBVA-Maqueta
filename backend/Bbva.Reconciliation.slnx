@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Bbva.Reconciliation.Api/Bbva.Reconciliation.Api.csproj" />
+    <Project Path="src/Bbva.Reconciliation.Application/Bbva.Reconciliation.Application.csproj" />
+    <Project Path="src/Bbva.Reconciliation.Domain/Bbva.Reconciliation.Domain.csproj" />
+    <Project Path="src/Bbva.Reconciliation.Infrastructure/Bbva.Reconciliation.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Bbva.Reconciliation.Api.Tests/Bbva.Reconciliation.Api.Tests.csproj" />
+    <Project Path="tests/Bbva.Reconciliation.Application.Tests/Bbva.Reconciliation.Application.Tests.csproj" />
+    <Project Path="tests/Bbva.Reconciliation.Domain.Tests/Bbva.Reconciliation.Domain.Tests.csproj" />
+    <Project Path="tests/Bbva.Reconciliation.Infrastructure.Tests/Bbva.Reconciliation.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

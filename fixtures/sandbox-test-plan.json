@@ -1,0 +1,4674 @@
+{
+  "$schema": "./sandbox-test-plan.schema.json",
+  "source": "07. Business reconciliation - Plan de pruebas Sandbox _ Sandbox Test plan.xlsx",
+  "api": "BBVA Business Reconciliation v1.0",
+  "sandboxBaseUrl": "https://sbx.pe.bbvaapimarket.com",
+  "liveBaseUrl": "https://apis.pe.bbvaapimarket.com",
+  "note": "Extracted from the official BBVA sandbox test plan. The workbook lists the LIVE host on every row; these cases are meant to run against sandboxBaseUrl.",
+  "totalCases": 41,
+  "totalRequests": 42,
+  "cases": [
+    {
+      "id": "SRCH-01",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-que-no-tiene-movimientos-pr",
+      "description": "Listar movimientos de una cuenta que no tiene movimientos previos",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105109862"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "message": "No transactions to show.",
+            "type": "INFO"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-02",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-cuando-no-se-encuentran-coi",
+      "description": "Listar movimientos de una cuenta cuando no se encuentran coincidencias con los datos a filtrar",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105109811"
+        ],
+        "operationDate": {
+          "fromDate": "2024-11-01T00:00:00.000Z",
+          "toDate": "2024-11-21T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "message": "No transactions to show.",
+            "type": "INFO"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-03",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-ahorro-soles-filtrando-por",
+      "description": "Listar movimientos de una cuenta ahorro soles filtrando por tipo de movimiento ingreso",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300210484377"
+        ],
+        "moneyFlow": "INCOME"
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300210484377000000363",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-10-31T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 2001628300.6,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300210484377",
+              "number": "001101300210484377"
+            },
+            "operation": {
+              "id": "PE00110201300210484377000000363",
+              "date": "2024-11-20T21:44:00.000-0500"
+            },
+            "transaction": {
+              "id": "363",
+              "amount": 430334.77,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300210484377000000361",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-09-30T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 2001262465.83,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300210484377",
+              "number": "001101300210484377"
+            },
+            "operation": {
+              "id": "PE00110201300210484377000000361",
+              "date": "2024-11-19T22:04:00.000-0500"
+            },
+            "transaction": {
+              "id": "361",
+              "amount": 416364.92,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300210484377000000360",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-08-31T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 2000846100.91,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300210484377",
+              "number": "001101300210484377"
+            },
+            "operation": {
+              "id": "PE00110201300210484377000000360",
+              "date": "2024-11-18T20:55:00.000-0500"
+            },
+            "transaction": {
+              "id": "360",
+              "amount": 430152.75,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300210484377000000353",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-03-31T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 1998735320.4,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300210484377",
+              "number": "001101300210484377"
+            },
+            "operation": {
+              "id": "PE00110201300210484377000000353",
+              "date": "2024-10-21T22:19:00.000-0500"
+            },
+            "transaction": {
+              "id": "353",
+              "amount": 429701.5,
+              "currency": "PEN"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 4,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-04",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-corriente-d-lares-aplicando",
+      "description": "Listar movimientos de una cuenta corriente dólares aplicando todos los filtros",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105109854"
+        ],
+        "operationDate": {
+          "fromDate": "2024-11-01T00:00:00.000Z",
+          "toDate": "2024-11-21T00:00:00.000Z"
+        },
+        "keyword": "traspaso",
+        "moneyFlow": "EXPENSE"
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300105109854000000095",
+            "comments": "*C/PROV FCF2F098212147AD937EEBC054",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1056405899.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000095",
+              "date": "2024-11-20T10:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "95",
+              "amount": -56456,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000092",
+            "comments": "*C/PROV F06B92A888CF4061A57146479F",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1056436856.58,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000092",
+              "date": "2024-11-11T15:06:00.000-0500"
+            },
+            "transaction": {
+              "id": "92",
+              "amount": -388,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000091",
+            "comments": "*C/PROV B69D4E9001F7412E80A16F42FD",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1056437244.58,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000091",
+              "date": "2024-11-11T14:48:00.000-0500"
+            },
+            "transaction": {
+              "id": "91",
+              "amount": -155,
+              "currency": "USD"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 3,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-05",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-bloqueada",
+      "description": "Listar movimientos de una cuenta bloqueada",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105109846"
+        ]
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300105109846000000014",
+            "comments": "*C/PROV AB39D33A0BEE46B985C0E95B87",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 29667.2,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000014",
+              "date": "2024-11-27T17:40:00.000-0500"
+            },
+            "transaction": {
+              "id": "14",
+              "amount": -500,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000013",
+            "comments": "*C/PROV 560F2CFC0FFC4C17AE7BD7CA01",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 30167.2,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000013",
+              "date": "2024-11-27T17:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "13",
+              "amount": -677,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000012",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 30844.2,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000012",
+              "date": "2024-11-27T17:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "12",
+              "amount": -0.05,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000011",
+            "comments": "*C/PROV 60B06AF4FC6941D882FA0F417A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 30844.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000011",
+              "date": "2024-11-27T17:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "11",
+              "amount": -1000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000010",
+            "comments": "*C/PROV 5F3D40BDDFEB4BBCB2AF0CE379",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 31844.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000010",
+              "date": "2024-11-27T17:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "10",
+              "amount": -560,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000009",
+            "comments": "*C/PROV EECEDFEB663F4288AF26990D58",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 32404.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000009",
+              "date": "2024-11-27T17:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "9",
+              "amount": -400,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000008",
+            "comments": "*C/PROV 187A5CBB74FD429FB9A3DF4235",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 32804.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000008",
+              "date": "2024-11-27T17:09:00.000-0500"
+            },
+            "transaction": {
+              "id": "8",
+              "amount": -546,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000007",
+            "comments": "*CLARO FIJX TELEFONO",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "151",
+              "name": "PAGO FACTURA"
+            },
+            "postedBalance": {
+              "amount": 33350.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000007",
+              "date": "2024-11-27T16:31:00.000-0500"
+            },
+            "transaction": {
+              "id": "7",
+              "amount": -800,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105109846000000006",
+            "comments": "*CLARO MOVIL TELEFONO.",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "151",
+              "name": "PAGO FACTURA"
+            },
+            "postedBalance": {
+              "amount": 34150.25,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105109846",
+              "number": "001101300105109846"
+            },
+            "operation": {
+              "id": "PE00110201300105109846000000006",
+              "date": "2024-11-27T16:27:00.000-0500"
+            },
+            "transaction": {
+              "id": "6",
+              "amount": -800,
+              "currency": "PEN"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 9,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-06",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-plazo-soles-sin-ingresar-fi",
+      "description": "Listar movimientos de una cuenta plazo soles sin ingresar filtros opcionales",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300301020152"
+        ]
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300301020152000000011",
+            "comments": "LIQUIDACION INTERESES DEP. 003",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-23T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 348091.66,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000011",
+              "date": "2024-11-22T21:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "11",
+              "amount": 36.1,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000010",
+            "comments": "LIQUIDACION INTERESES DEP. 001",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-23T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 348055.56,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000010",
+              "date": "2024-11-22T21:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "10",
+              "amount": 26.23,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000009",
+            "comments": "LIQUIDACION INTERESES DEP. 005",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 348029.33,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000009",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "9",
+              "amount": 1.33,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000008",
+            "comments": "LIQUIDACION INTERESES DEP. 004",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 348028,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000008",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "8",
+              "amount": 12.73,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000007",
+            "comments": "LIQUIDACION INTERESES DEP. 002",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 348015.27,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000007",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "7",
+              "amount": 10.27,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000006",
+            "comments": "APERTURA DEPOSITO 005",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 348005,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000006",
+              "date": "2024-11-20T16:51:00.000-0500"
+            },
+            "transaction": {
+              "id": "6",
+              "amount": 9800,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000005",
+            "comments": "APERTURA DEPOSITO 004",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 338205,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000005",
+              "date": "2024-11-20T16:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "5",
+              "amount": 93890,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000004",
+            "comments": "APERTURA DEPOSITO 003",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 244315,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000004",
+              "date": "2024-11-20T16:47:00.000-0500"
+            },
+            "transaction": {
+              "id": "4",
+              "amount": 88765,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000003",
+            "comments": "APERTURA DEPOSITO 002",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 155550,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000003",
+              "date": "2024-11-20T16:41:00.000-0500"
+            },
+            "transaction": {
+              "id": "3",
+              "amount": 75800,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000002",
+            "comments": "APERTURA DEPOSITO 001",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 79750,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000002",
+              "date": "2024-11-20T16:10:00.000-0500"
+            },
+            "transaction": {
+              "id": "2",
+              "amount": 64500,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300301020152000000001",
+            "comments": "APERTURA DE CUENTA",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-14T00:00:00.000-0500",
+            "concept": {
+              "id": "515",
+              "name": "APERTURA DE CUENTA"
+            },
+            "postedBalance": {
+              "amount": 0,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300301020152",
+              "number": "001101300301020152"
+            },
+            "operation": {
+              "id": "PE00110201300301020152000000001",
+              "date": "2024-11-14T17:05:00.000-0500"
+            },
+            "transaction": {
+              "id": "1",
+              "amount": 0,
+              "currency": "PEN"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 11,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-07",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-plazo-d-lares",
+      "description": "Listar movimientos de una cuenta plazo dólares",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300301019189"
+        ],
+        "operationDate": "",
+        "moneyFlow": "",
+        "keyword": ""
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300301019189000000012",
+            "comments": "LIQUIDACION INTERESES DEP. 002",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-25T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 387276.72,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000012",
+              "date": "2024-11-22T21:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "12",
+              "amount": 8.68,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000011",
+            "comments": "LIQUIDACION INTERESES DEP. 004",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 387268.04,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000011",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "11",
+              "amount": 6.05,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000010",
+            "comments": "LIQUIDACION INTERESES DEP. 003",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 387261.99,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000010",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "10",
+              "amount": 4.31,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000009",
+            "comments": "LIQUIDACION INTERESES DEP. 001",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 387257.68,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000009",
+              "date": "2024-11-21T20:42:00.000-0500"
+            },
+            "transaction": {
+              "id": "9",
+              "amount": 0.68,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000008",
+            "comments": "APERTURA DEPOSITO 007",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 387257,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000008",
+              "date": "2024-11-20T17:10:00.000-0500"
+            },
+            "transaction": {
+              "id": "8",
+              "amount": 77340,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000007",
+            "comments": "APERTURA DEPOSITO 006",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 309917,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000007",
+              "date": "2024-11-20T17:07:00.000-0500"
+            },
+            "transaction": {
+              "id": "7",
+              "amount": 63700,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000006",
+            "comments": "APERTURA DEPOSITO 005",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 246217,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000006",
+              "date": "2024-11-20T16:59:00.000-0500"
+            },
+            "transaction": {
+              "id": "6",
+              "amount": 49500,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000005",
+            "comments": "APERTURA DEPOSITO 004",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 196717,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000005",
+              "date": "2024-11-20T16:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "5",
+              "amount": 44667,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000004",
+            "comments": "APERTURA DEPOSITO 003",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 152050,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000004",
+              "date": "2024-11-20T16:53:00.000-0500"
+            },
+            "transaction": {
+              "id": "4",
+              "amount": 31800,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000003",
+            "comments": "APERTURA DEPOSITO 002",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 120250,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000003",
+              "date": "2024-11-20T15:04:00.000-0500"
+            },
+            "transaction": {
+              "id": "3",
+              "amount": 12800,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300301019189000000002",
+            "comments": "APERTURA DEPOSITO 001",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "516",
+              "name": "APERTURA DEPOSITO A PLAZO"
+            },
+            "postedBalance": {
+              "amount": 107450,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300301019189",
+              "number": "001101300301019189"
+            },
+            "operation": {
+              "id": "PE00110201300301019189000000002",
+              "date": "2024-11-20T14:45:00.000-0500"
+            },
+            "transaction": {
+              "id": "2",
+              "amount": 5000,
+              "currency": "USD"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 11,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-08",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-corriente-soles-filtrando-p",
+      "description": "Listar movimientos de una cuenta corriente soles filtrando por tipo de movimiento gasto y palabra clave",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105089306"
+        ],
+        "moneyFlow": "EXPENSE",
+        "keyword": "612"
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300105089306000000130",
+            "comments": "*C/PROV CDB798CB9F344820AB130B8D24",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153705787.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000130",
+              "date": "2024-11-27T16:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "130",
+              "amount": -450,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000129",
+            "comments": "*C/PROV F6498323324940C1A2DC148D0A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-25T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706237.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000129",
+              "date": "2024-11-25T17:48:00.000-0500"
+            },
+            "transaction": {
+              "id": "129",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000128",
+            "comments": "*C/PROV 47B95DC2B0EC42B8B4B84ABA5A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-25T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706337.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000128",
+              "date": "2024-11-25T08:30:00.000-0500"
+            },
+            "transaction": {
+              "id": "128",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000127",
+            "comments": "*C/PROV 7291396C304246D88AD9805DD6",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706437.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000127",
+              "date": "2024-11-21T17:23:00.000-0500"
+            },
+            "transaction": {
+              "id": "127",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000126",
+            "comments": "*C/PROV 83454F0F0C4F490498B36D6DB0",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706537.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000126",
+              "date": "2024-11-21T10:05:00.000-0500"
+            },
+            "transaction": {
+              "id": "126",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000107",
+            "comments": "*C/PROV 9B95A80A613D4EF3A45ED4045B",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151157350.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000107",
+              "date": "2024-11-20T17:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "107",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000105",
+            "comments": "*C/PROV 4879F776296C49D5964538CA4B",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151163250.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000105",
+              "date": "2024-11-20T16:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "105",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000099",
+            "comments": "*C/PROV 126801305E5C49AAAEF57054A2",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151330040.96,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000099",
+              "date": "2024-11-20T09:24:00.000-0500"
+            },
+            "transaction": {
+              "id": "99",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000094",
+            "comments": "*C/PROV F737B8C715C3400EABE450E0D5",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148873039.97,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000094",
+              "date": "2024-11-19T17:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "94",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000090",
+            "comments": "*C/PROV 8FC5EE6A9ED34EE5968C74D356",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148876040.12,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000090",
+              "date": "2024-11-19T16:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "90",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000088",
+            "comments": "*C/PROV C3B639859295433D8728F32D62",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-15T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146345560.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000088",
+              "date": "2024-11-15T10:13:00.000-0500"
+            },
+            "transaction": {
+              "id": "88",
+              "amount": -456,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000087",
+            "comments": "*C/PROV 634630B2FC1240DAB1C1DF5E30",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-14T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346016.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000087",
+              "date": "2024-11-14T12:39:00.000-0500"
+            },
+            "transaction": {
+              "id": "87",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000086",
+            "comments": "*C/PROV B5E7C5C4CD1C4368AAF2B59E23",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-14T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346116.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000086",
+              "date": "2024-11-14T12:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "86",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000082",
+            "comments": "*C/PROV C8365694ADE44E298C15B993D7",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346653.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000082",
+              "date": "2024-11-11T15:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "82",
+              "amount": -500,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000081",
+            "comments": "*C/PROV B91E7FDBF9B34C9FA31C864079",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146347153.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000081",
+              "date": "2024-11-11T15:54:00.000-0500"
+            },
+            "transaction": {
+              "id": "81",
+              "amount": -500,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000080",
+            "comments": "*C/PROV ED80BBBC1CF94CBF9F64DF37DD",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146347653.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000080",
+              "date": "2024-11-11T15:37:00.000-0500"
+            },
+            "transaction": {
+              "id": "80",
+              "amount": -313,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000079",
+            "comments": "*C/PROV 7F23D12965174BC09B5BD93D60",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146347966.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000079",
+              "date": "2024-11-11T14:57:00.000-0500"
+            },
+            "transaction": {
+              "id": "79",
+              "amount": -176,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000078",
+            "comments": "*C/PROV AB92F751DDFF4068AFEF24E369",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146348142.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000078",
+              "date": "2024-11-11T14:50:00.000-0500"
+            },
+            "transaction": {
+              "id": "78",
+              "amount": -167,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000077",
+            "comments": "*C/PROV AC9FCDC0DB3C4191B90A28BF35",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146348309.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000077",
+              "date": "2024-11-11T12:35:00.000-0500"
+            },
+            "transaction": {
+              "id": "77",
+              "amount": -400,
+              "currency": "PEN"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 19,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-09",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-corriente-d-lares-filtrando",
+      "description": "Listar movimientos de una cuenta corriente dólares filtrando por fecha inicial y final",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105109854"
+        ],
+        "operationDate": {
+          "fromDate": "2024-11-12T00:00:00.000Z",
+          "toDate": "2024-11-21T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300105109854000000100",
+            "comments": "APERTURA PLAZO 0301019189 DEP:003",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "625",
+              "name": "CARGO APERTURA PLAZO"
+            },
+            "postedBalance": {
+              "amount": 1056417755.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000100",
+              "date": "2024-11-20T16:53:00.000-0500"
+            },
+            "transaction": {
+              "id": "100",
+              "amount": -31800,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000099",
+            "comments": "APERTURA PLAZO 0301019189 DEP:002",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "625",
+              "name": "CARGO APERTURA PLAZO"
+            },
+            "postedBalance": {
+              "amount": 1056449555.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000099",
+              "date": "2024-11-20T15:04:00.000-0500"
+            },
+            "transaction": {
+              "id": "99",
+              "amount": -12800,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000098",
+            "comments": "DEVOLUC. ITF",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "528",
+              "name": "DEVOLUC. ITF"
+            },
+            "postedBalance": {
+              "amount": 1056462355.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000098",
+              "date": "2024-11-20T10:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "98",
+              "amount": 2.8,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000097",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1056462352.53,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000097",
+              "date": "2024-11-20T10:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "97",
+              "amount": 56456,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000096",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1056405896.53,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000096",
+              "date": "2024-11-20T10:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "96",
+              "amount": -2.8,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000095",
+            "comments": "*C/PROV FCF2F098212147AD937EEBC054",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1056405899.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000095",
+              "date": "2024-11-20T10:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "95",
+              "amount": -56456,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000094",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1056462355.33,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000094",
+              "date": "2024-11-19T16:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "94",
+              "amount": -1.25,
+              "currency": "USD"
+            }
+          },
+          {
+            "id": "PE00110201300105109854000000093",
+            "comments": "B",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "010",
+              "name": "NOTA DE ABONO"
+            },
+            "postedBalance": {
+              "amount": 1056462356.58,
+              "currency": "USD"
+            },
+            "contract": {
+              "id": "PE001101300105109854",
+              "number": "001101300105109854"
+            },
+            "operation": {
+              "id": "PE00110201300105109854000000093",
+              "date": "2024-11-19T16:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "93",
+              "amount": 25500,
+              "currency": "USD"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 8,
+          "totalPages": 1,
+          "pageSize": 50,
+          "keys": {
+            "next": "",
+            "last": "L:-1|G:0|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      }
+    },
+    {
+      "id": "SRCH-10",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-con-p-gina-siguiente",
+      "description": "Listar movimientos de una cuenta con página siguiente",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 200,
+      "requestBody": {
+        "contracts": [
+          "001101300105089306"
+        ],
+        "paginationKey": ""
+      },
+      "expectedResponse": {
+        "movements": [
+          {
+            "id": "PE00110201300105089306000000130",
+            "comments": "*C/PROV CDB798CB9F344820AB130B8D24",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-27T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153705787.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000130",
+              "date": "2024-11-27T16:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "130",
+              "amount": -450,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000129",
+            "comments": "*C/PROV F6498323324940C1A2DC148D0A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-25T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706237.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000129",
+              "date": "2024-11-25T17:48:00.000-0500"
+            },
+            "transaction": {
+              "id": "129",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000128",
+            "comments": "*C/PROV 47B95DC2B0EC42B8B4B84ABA5A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-25T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706337.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000128",
+              "date": "2024-11-25T08:30:00.000-0500"
+            },
+            "transaction": {
+              "id": "128",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000127",
+            "comments": "*C/PROV 7291396C304246D88AD9805DD6",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706437.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000127",
+              "date": "2024-11-21T17:23:00.000-0500"
+            },
+            "transaction": {
+              "id": "127",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000126",
+            "comments": "*C/PROV 83454F0F0C4F490498B36D6DB0",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-21T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1153706537.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000126",
+              "date": "2024-11-21T10:05:00.000-0500"
+            },
+            "transaction": {
+              "id": "126",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000125",
+            "comments": "COMISION DE MANTENIMIENTO JUN-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "638",
+              "name": "COMISION DE MANTENIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153706637.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000125",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "125",
+              "amount": -24,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000124",
+            "comments": "COMISION DE MANTENIMIENTO MAY-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "638",
+              "name": "COMISION DE MANTENIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153706661.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000124",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "124",
+              "amount": -24,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000123",
+            "comments": "ENVIO DE EXTRACTO DE MOVIMIENTO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "648",
+              "name": "ENVIO DE EXTRACTO DE MOVIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153706685.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000123",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "123",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000122",
+            "comments": "COMISION ANIVERSARIO ABR-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "629",
+              "name": "COMISION ANIVERSARIO"
+            },
+            "postedBalance": {
+              "amount": 1153706785.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000122",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "122",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000121",
+            "comments": "COMISION VERIFICACION DOMICILIO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "646",
+              "name": "COM.REGISTRO,CTROL.Y VERIF.DOMIC."
+            },
+            "postedBalance": {
+              "amount": 1153706885.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000121",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "121",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000120",
+            "comments": "ENVIO DE EXTRACTO DE MOVIMIENTO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "641",
+              "name": "ENVIO DE EXTRACTO DE MOVIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153706985.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000120",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "120",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000119",
+            "comments": "COM. POR EXCESO DE OPERACIONES ABR",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "640",
+              "name": "COMISION POR NUMEROS DE RETIROS"
+            },
+            "postedBalance": {
+              "amount": 1153707085.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000119",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "119",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000118",
+            "comments": "COMISION POR INACTIVIDAD ABR-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "639",
+              "name": "COMISION DE INACTIVIDAD"
+            },
+            "postedBalance": {
+              "amount": 1153707185.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000118",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "118",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000117",
+            "comments": "COM. ADM.CUENTAS DEUDORAS ABR-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "637",
+              "name": "COMISION ADM.CUENTAS DEUDORAS"
+            },
+            "postedBalance": {
+              "amount": 1153707285.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000117",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "117",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000116",
+            "comments": "COMISION DE MANTENIMIENTO ABR-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "638",
+              "name": "COMISION DE MANTENIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153707385.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000116",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "116",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000115",
+            "comments": "ENVIO DE EXTRACTO DE MOVIMIENTO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "648",
+              "name": "ENVIO DE EXTRACTO DE MOVIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153707485.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000115",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "115",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000114",
+            "comments": "COMISION ANIVERSARIO ABR-2023",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "629",
+              "name": "COMISION ANIVERSARIO"
+            },
+            "postedBalance": {
+              "amount": 1153707585.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000114",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "114",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000113",
+            "comments": "COMISION VERIFICACION DOMICILIO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "646",
+              "name": "COM.REGISTRO,CTROL.Y VERIF.DOMIC."
+            },
+            "postedBalance": {
+              "amount": 1153707685.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000113",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "113",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000112",
+            "comments": "ENVIO DE EXTRACTO DE MOVIMIENTO AB",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-04T00:00:00.000-0500",
+            "concept": {
+              "id": "641",
+              "name": "ENVIO DE EXTRACTO DE MOVIMIENTO"
+            },
+            "postedBalance": {
+              "amount": 1153707785.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000112",
+              "date": "2024-11-21T22:02:00.000-0500"
+            },
+            "transaction": {
+              "id": "112",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000111",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-10-31T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 1153707885.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000111",
+              "date": "2024-11-20T21:44:00.000-0500"
+            },
+            "transaction": {
+              "id": "111",
+              "amount": 2547535.15,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000110",
+            "comments": "DEVOLUC. ITF",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "528",
+              "name": "DEVOLUC. ITF"
+            },
+            "postedBalance": {
+              "amount": 1151160350.66,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000110",
+              "date": "2024-11-20T17:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "110",
+              "amount": 0.15,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000109",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151160350.51,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000109",
+              "date": "2024-11-20T17:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "109",
+              "amount": 3000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000108",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1151157350.51,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000108",
+              "date": "2024-11-20T17:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "108",
+              "amount": -0.3,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000107",
+            "comments": "*C/PROV 9B95A80A613D4EF3A45ED4045B",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151157350.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000107",
+              "date": "2024-11-20T17:03:00.000-0500"
+            },
+            "transaction": {
+              "id": "107",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000106",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151163350.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000106",
+              "date": "2024-11-20T16:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "106",
+              "amount": 100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000105",
+            "comments": "*C/PROV 4879F776296C49D5964538CA4B",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151163250.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000105",
+              "date": "2024-11-20T16:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "105",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000104",
+            "comments": "APERTURA PLAZO 0301020152 DEP:004",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "625",
+              "name": "CARGO APERTURA PLAZO"
+            },
+            "postedBalance": {
+              "amount": 1151163350.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000104",
+              "date": "2024-11-20T16:49:00.000-0500"
+            },
+            "transaction": {
+              "id": "104",
+              "amount": -93890,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000103",
+            "comments": "APERTURA PLAZO 0301020152 DEP:002",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "625",
+              "name": "CARGO APERTURA PLAZO"
+            },
+            "postedBalance": {
+              "amount": 1151257240.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000103",
+              "date": "2024-11-20T16:41:00.000-0500"
+            },
+            "transaction": {
+              "id": "103",
+              "amount": -75800,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000102",
+            "comments": "DEVOLUC. ITF",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "528",
+              "name": "DEVOLUC. ITF"
+            },
+            "postedBalance": {
+              "amount": 1151333040.81,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000102",
+              "date": "2024-11-20T09:24:00.000-0500"
+            },
+            "transaction": {
+              "id": "102",
+              "amount": 0.15,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000101",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151333040.66,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000101",
+              "date": "2024-11-20T09:24:00.000-0500"
+            },
+            "transaction": {
+              "id": "101",
+              "amount": 3000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000100",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1151330040.66,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000100",
+              "date": "2024-11-20T09:24:00.000-0500"
+            },
+            "transaction": {
+              "id": "100",
+              "amount": -0.3,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000099",
+            "comments": "*C/PROV 126801305E5C49AAAEF57054A2",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-20T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1151330040.96,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000099",
+              "date": "2024-11-20T09:24:00.000-0500"
+            },
+            "transaction": {
+              "id": "99",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000098",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-09-30T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 1151336040.96,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000098",
+              "date": "2024-11-19T22:04:00.000-0500"
+            },
+            "transaction": {
+              "id": "98",
+              "amount": 2460001.14,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000097",
+            "comments": "DEVOLUC. ITF",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "528",
+              "name": "DEVOLUC. ITF"
+            },
+            "postedBalance": {
+              "amount": 1148876039.82,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000097",
+              "date": "2024-11-19T17:37:00.000-0500"
+            },
+            "transaction": {
+              "id": "97",
+              "amount": 0.15,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000096",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148876039.67,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000096",
+              "date": "2024-11-19T17:37:00.000-0500"
+            },
+            "transaction": {
+              "id": "96",
+              "amount": 3000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000095",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1148873039.67,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000095",
+              "date": "2024-11-19T17:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "95",
+              "amount": -0.3,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000094",
+            "comments": "*C/PROV F737B8C715C3400EABE450E0D5",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148873039.97,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000094",
+              "date": "2024-11-19T17:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "94",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000093",
+            "comments": "DEVOLUC. ITF",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "528",
+              "name": "DEVOLUC. ITF"
+            },
+            "postedBalance": {
+              "amount": 1148879039.97,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000093",
+              "date": "2024-11-19T16:37:00.000-0500"
+            },
+            "transaction": {
+              "id": "93",
+              "amount": 0.15,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000092",
+            "comments": "*A/DEV.PROVEEDO",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "507",
+              "name": "ABONO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148879039.82,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000092",
+              "date": "2024-11-19T16:37:00.000-0500"
+            },
+            "transaction": {
+              "id": "92",
+              "amount": 3000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000091",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1148876039.82,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000091",
+              "date": "2024-11-19T16:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "91",
+              "amount": -0.3,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000090",
+            "comments": "*C/PROV 8FC5EE6A9ED34EE5968C74D356",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-19T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1148876040.12,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000090",
+              "date": "2024-11-19T16:36:00.000-0500"
+            },
+            "transaction": {
+              "id": "90",
+              "amount": -6000,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000089",
+            "comments": "ABONO INTERESES GANADOS",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-08-31T00:00:00.000-0500",
+            "concept": {
+              "id": "501",
+              "name": "ABONO INTERESES GANADOS"
+            },
+            "postedBalance": {
+              "amount": 1148882040.12,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000089",
+              "date": "2024-11-18T20:55:00.000-0500"
+            },
+            "transaction": {
+              "id": "89",
+              "amount": 2536479.32,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000088",
+            "comments": "*C/PROV C3B639859295433D8728F32D62",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-15T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146345560.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000088",
+              "date": "2024-11-15T10:13:00.000-0500"
+            },
+            "transaction": {
+              "id": "88",
+              "amount": -456,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000087",
+            "comments": "*C/PROV 634630B2FC1240DAB1C1DF5E30",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-14T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346016.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000087",
+              "date": "2024-11-14T12:39:00.000-0500"
+            },
+            "transaction": {
+              "id": "87",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000086",
+            "comments": "*C/PROV B5E7C5C4CD1C4368AAF2B59E23",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-14T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346116.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000086",
+              "date": "2024-11-14T12:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "86",
+              "amount": -100,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000085",
+            "comments": "ITF - CARGO ITF",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-13T00:00:00.000-0500",
+            "concept": {
+              "id": "527",
+              "name": "ITF"
+            },
+            "postedBalance": {
+              "amount": 1146346216.8,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000085",
+              "date": "2024-11-13T11:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "85",
+              "amount": -0.05,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000084",
+            "comments": "A",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-13T00:00:00.000-0500",
+            "concept": {
+              "id": "265",
+              "name": "CARGO A CUENTA POR PAGO ADELANTADO"
+            },
+            "postedBalance": {
+              "amount": 1146346216.85,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000084",
+              "date": "2024-11-13T11:38:00.000-0500"
+            },
+            "transaction": {
+              "id": "84",
+              "amount": -1140,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000083",
+            "comments": "A",
+            "isFinanceable": false,
+            "moneyFlow": "INCOME",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-13T00:00:00.000-0500",
+            "concept": {
+              "id": "010",
+              "name": "NOTA DE ABONO"
+            },
+            "postedBalance": {
+              "amount": 1146347356.85,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000083",
+              "date": "2024-11-13T11:29:00.000-0500"
+            },
+            "transaction": {
+              "id": "83",
+              "amount": 703.75,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000082",
+            "comments": "*C/PROV C8365694ADE44E298C15B993D7",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146346653.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000082",
+              "date": "2024-11-11T15:56:00.000-0500"
+            },
+            "transaction": {
+              "id": "82",
+              "amount": -500,
+              "currency": "PEN"
+            }
+          },
+          {
+            "id": "PE00110201300105089306000000081",
+            "comments": "*C/PROV B91E7FDBF9B34C9FA31C864079",
+            "isFinanceable": false,
+            "moneyFlow": "EXPENSE",
+            "status": "SETTLED",
+            "valuationDate": "2024-11-11T00:00:00.000-0500",
+            "concept": {
+              "id": "612",
+              "name": "CARGO POR TRASPASO"
+            },
+            "postedBalance": {
+              "amount": 1146347153.1,
+              "currency": "PEN"
+            },
+            "contract": {
+              "id": "PE001101300105089306",
+              "number": "001101300105089306"
+            },
+            "operation": {
+              "id": "PE00110201300105089306000000081",
+              "date": "2024-11-11T15:54:00.000-0500"
+            },
+            "transaction": {
+              "id": "81",
+              "amount": -500,
+              "currency": "PEN"
+            }
+          }
+        ],
+        "pagination": {
+          "totalElements": 54,
+          "totalPages": 2,
+          "pageSize": 50,
+          "keys": {
+            "next": "L:-1|G:50|B:-1.0",
+            "last": "L:-1|G:4|B:-1.0",
+            "previous": "L:-1|G:0|B:-1.0",
+            "first": "G:0"
+          }
+        }
+      },
+      "followUp": [
+        {
+          "step": 2,
+          "requestBody": {
+            "contracts": [
+              "001101300105089306"
+            ],
+            "paginationKey": "L:-1|G:50|B:-1.0"
+          },
+          "expectedStatusCode": 200,
+          "expectedResponse": {
+            "movements": [
+              {
+                "id": "PE00110201300105089306000000080",
+                "comments": "*C/PROV ED80BBBC1CF94CBF9F64DF37DD",
+                "isFinanceable": false,
+                "moneyFlow": "EXPENSE",
+                "status": "SETTLED",
+                "valuationDate": "2024-11-11T00:00:00.000-0500",
+                "concept": {
+                  "id": "612",
+                  "name": "CARGO POR TRASPASO"
+                },
+                "postedBalance": {
+                  "amount": 1146347653.1,
+                  "currency": "PEN"
+                },
+                "contract": {
+                  "id": "PE001101300105089306",
+                  "number": "001101300105089306"
+                },
+                "operation": {
+                  "id": "PE00110201300105089306000000080",
+                  "date": "2024-11-11T15:37:00.000-0500"
+                },
+                "transaction": {
+                  "id": "80",
+                  "amount": -313,
+                  "currency": "PEN"
+                }
+              },
+              {
+                "id": "PE00110201300105089306000000079",
+                "comments": "*C/PROV 7F23D12965174BC09B5BD93D60",
+                "isFinanceable": false,
+                "moneyFlow": "EXPENSE",
+                "status": "SETTLED",
+                "valuationDate": "2024-11-11T00:00:00.000-0500",
+                "concept": {
+                  "id": "612",
+                  "name": "CARGO POR TRASPASO"
+                },
+                "postedBalance": {
+                  "amount": 1146347966.1,
+                  "currency": "PEN"
+                },
+                "contract": {
+                  "id": "PE001101300105089306",
+                  "number": "001101300105089306"
+                },
+                "operation": {
+                  "id": "PE00110201300105089306000000079",
+                  "date": "2024-11-11T14:57:00.000-0500"
+                },
+                "transaction": {
+                  "id": "79",
+                  "amount": -176,
+                  "currency": "PEN"
+                }
+              },
+              {
+                "id": "PE00110201300105089306000000078",
+                "comments": "*C/PROV AB92F751DDFF4068AFEF24E369",
+                "isFinanceable": false,
+                "moneyFlow": "EXPENSE",
+                "status": "SETTLED",
+                "valuationDate": "2024-11-11T00:00:00.000-0500",
+                "concept": {
+                  "id": "612",
+                  "name": "CARGO POR TRASPASO"
+                },
+                "postedBalance": {
+                  "amount": 1146348142.1,
+                  "currency": "PEN"
+                },
+                "contract": {
+                  "id": "PE001101300105089306",
+                  "number": "001101300105089306"
+                },
+                "operation": {
+                  "id": "PE00110201300105089306000000078",
+                  "date": "2024-11-11T14:50:00.000-0500"
+                },
+                "transaction": {
+                  "id": "78",
+                  "amount": -167,
+                  "currency": "PEN"
+                }
+              },
+              {
+                "id": "PE00110201300105089306000000077",
+                "comments": "*C/PROV AC9FCDC0DB3C4191B90A28BF35",
+                "isFinanceable": false,
+                "moneyFlow": "EXPENSE",
+                "status": "SETTLED",
+                "valuationDate": "2024-11-11T00:00:00.000-0500",
+                "concept": {
+                  "id": "612",
+                  "name": "CARGO POR TRASPASO"
+                },
+                "postedBalance": {
+                  "amount": 1146348309.1,
+                  "currency": "PEN"
+                },
+                "contract": {
+                  "id": "PE001101300105089306",
+                  "number": "001101300105089306"
+                },
+                "operation": {
+                  "id": "PE00110201300105089306000000077",
+                  "date": "2024-11-11T12:35:00.000-0500"
+                },
+                "transaction": {
+                  "id": "77",
+                  "amount": -400,
+                  "currency": "PEN"
+                }
+              }
+            ],
+            "pagination": {
+              "totalElements": 54,
+              "totalPages": 2,
+              "pageSize": 50,
+              "keys": {
+                "next": "",
+                "last": "L:-1|G:4|B:-1.0",
+                "previous": "L:-1|G:0|B:-1.0",
+                "first": "G:0"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SRCH-11",
+      "group": "search",
+      "name": "listar-movimientos-de-varias-cuentas",
+      "description": "Listar movimientos de varias cuentas",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300301020152",
+          "001101300105114734"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The number of contracts must be 1.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-12",
+      "group": "search",
+      "name": "listar-movimientos-con-n-mero-de-cuenta-mayor-a-18-d-gitos",
+      "description": "Listar movimientos con número de cuenta mayor a 18 dígitos",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "0011013001051180004"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number must be 18 digits long.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-13",
+      "group": "search",
+      "name": "listar-movimientos-con-n-mero-de-cuenta-menor-a-18-d-gitos",
+      "description": "Listar movimientos con número de cuenta menor a 18 dígitos",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "00110130210522635"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number must be 18 digits long.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-14",
+      "group": "search",
+      "name": "listar-movimientos-sin-ingresar-n-mero-de-cuenta",
+      "description": "Listar movimientos sin ingresar número de cuenta",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          ""
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Mandatory parameter contracts not informed.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-15",
+      "group": "search",
+      "name": "listar-movimientos-con-n-mero-de-cuenta-con-caracteres-alfan",
+      "description": "Listar movimientos con número de cuenta con caracteres alfanuméricos",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300F0.1*9854"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number accepts only numbers.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-16",
+      "group": "search",
+      "name": "listar-movimientos-con-n-mero-de-cuenta-no-asociada-en-api",
+      "description": "Listar movimientos con número de cuenta no asociada en API",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 403,
+      "requestBody": {
+        "contracts": [
+          "001101300210522600"
+        ]
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "forbidden",
+            "message": "Access denied",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-17",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-inicial",
+      "description": "Listar movimientos de una cuenta filtrando por fecha inicial con formato inválido",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300105089306"
+        ],
+        "operationDate": {
+          "fromDate": "2024-10/01T00:00:00.000Z",
+          "toDate": "2024-11-21T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Invalid format for parameter operationDate.fromDate. Correct format: yyyy-MM-ddTHH:mm:ss.SSSZ",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-18",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-final-c",
+      "description": "Listar movimientos de una cuenta filtrando por fecha final con formato inválido",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300105109811"
+        ],
+        "operationDate": {
+          "fromDate": "2024-09-11T00:00:00.000Z",
+          "toDate": "2024/11-06T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Invalid format for parameter operationDate.toDate. Correct format: yyyy-MM-ddTHH:mm:ss.SSSZ",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-19",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-con-fecha-final-m",
+      "description": "Listar movimientos de una cuenta filtrando con fecha final menor a la fecha inicial",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300210484377"
+        ],
+        "operationDate": {
+          "fromDate": "2024-11-10T00:00:00.000Z",
+          "toDate": "2024-11-01T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The parameter operationDate.toDate value must be later than operationDate.fromDate value.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-20",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-inicial",
+      "description": "Listar movimientos de una cuenta filtrando por fecha inicial pero sin ingresar fecha final o con valor vacío",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300301019189"
+        ],
+        "operationDate": {
+          "fromDate": "2024-06-25T00:00:00.000Z",
+          "toDate": ""
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Mandatory parameter operationDate.toDate not informed.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-21",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-final-p",
+      "description": "Listar movimientos de una cuenta filtrando por fecha final pero sin ingresar fecha inicial o con valor vacío",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300105118004"
+        ],
+        "operationDate": {
+          "toDate": "2024-11-18T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Mandatory parameter operationDate.fromDate not informed.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-22",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-tipo-de-movim",
+      "description": "Listar movimientos de una cuenta filtrando por tipo de movimiento inválido",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300210515493"
+        ],
+        "moneyFlow": "ENTRY"
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "Invalid moneyFlow value. Admitted: EXPENSE, INCOME.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-23",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-inicial",
+      "description": "Listar movimientos de una cuenta filtrando por fecha inicial menor a la fecha 2024-01-01",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300105109811"
+        ],
+        "operationDate": {
+          "fromDate": "2023-12-31T00:00:00.000Z",
+          "toDate": "2024-11-20T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The parameter operationDate.fromDate must be later than or equal to the date 2024-01-01T00:00:00.000Z",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-24",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-filtrando-por-fecha-final-m",
+      "description": "Listar movimientos de una cuenta filtrando por fecha final mayor a la fecha actual",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300210484377"
+        ],
+        "operationDate": {
+          "fromDate": "2024-04-20T00:00:00.000Z",
+          "toDate": "2030-12-26T00:00:00.000Z"
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The parameter operationDate.toDate must be before than or equal to the current date.",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "SRCH-25",
+      "group": "search",
+      "name": "listar-movimientos-de-una-cuenta-cuando-el-servicio-no-est-d",
+      "description": "Listar movimientos de una cuenta cuando el servicio no está disponible",
+      "method": "POST",
+      "path": "/pe/business-reconciliation/v1/transactions/search",
+      "expectedStatusCode": 400,
+      "requestBody": {
+        "contracts": [
+          "001101300210515493"
+        ],
+        "operationDate": {
+          "fromDate": "2024-08-15T00:00:00.000Z",
+          "toDate": "2024-11-18T00:00:00.000Z",
+          "pageSize": 7
+        }
+      },
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "badRequest",
+            "message": "badRequest",
+            "type": "ERROR"
+          }
+        ]
+      }
+    },
+    {
+      "id": "DTL-01",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-bloqueada",
+      "description": "Detalle de movimiento de una cuenta bloqueada",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300105109846000000014",
+        "comments": "*C/PROV AB39D33A0BEE46B985C0E95B87",
+        "isFinanceable": false,
+        "moneyFlow": "EXPENSE",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-27T00:00:00.000-0500",
+        "concept": {
+          "id": "612",
+          "name": "CARGO POR TRASPASO"
+        },
+        "postedBalance": {
+          "amount": 29667.2,
+          "currency": "PEN"
+        },
+        "contract": {
+          "id": "PE001101300105109846",
+          "number": "001101300105109846"
+        },
+        "operation": {
+          "id": "PE00110201300105109846000000014",
+          "date": "2024-11-27T17:40:00.000-0500"
+        },
+        "transaction": {
+          "id": "14",
+          "amount": -500,
+          "currency": "PEN"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300105109846",
+        "transactionId": "PE00110201300105109846000000014"
+      }
+    },
+    {
+      "id": "DTL-02",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-corriente-soles",
+      "description": "Detalle de movimiento de una cuenta corriente soles",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300105114734000000020",
+        "comments": "*SEDAPAL",
+        "isFinanceable": false,
+        "moneyFlow": "EXPENSE",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-28T00:00:00.000-0500",
+        "concept": {
+          "id": "151",
+          "name": "PAGO FACTURA"
+        },
+        "postedBalance": {
+          "amount": 1100787622.21,
+          "currency": "PEN"
+        },
+        "contract": {
+          "id": "PE001101300105114734",
+          "number": "001101300105114734"
+        },
+        "operation": {
+          "id": "PE00110201300105114734000000020",
+          "date": "2024-11-28T14:41:00.000-0500"
+        },
+        "transaction": {
+          "id": "20",
+          "amount": -911.12,
+          "currency": "PEN"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300105114734",
+        "transactionId": "PE00110201300105114734000000020"
+      }
+    },
+    {
+      "id": "DTL-03",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-corriente-dolares",
+      "description": "Detalle de movimiento de una cuenta corriente dolares",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300105109854000000092",
+        "comments": "*C/PROV F06B92A888CF4061A57146479F",
+        "isFinanceable": false,
+        "moneyFlow": "EXPENSE",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-11T00:00:00.000-0500",
+        "concept": {
+          "id": "612",
+          "name": "CARGO POR TRASPASO"
+        },
+        "postedBalance": {
+          "amount": 1056436856.58,
+          "currency": "USD"
+        },
+        "contract": {
+          "id": "PE001101300105109854",
+          "number": "001101300105109854"
+        },
+        "operation": {
+          "id": "PE00110201300105109854000000092",
+          "date": "2024-11-11T15:06:00.000-0500"
+        },
+        "transaction": {
+          "id": "92",
+          "amount": -388,
+          "currency": "USD"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300105109854",
+        "transactionId": "PE00110201300105109854000000092"
+      }
+    },
+    {
+      "id": "DTL-04",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-ahorro-soles",
+      "description": "Detalle de movimiento de una cuenta ahorro soles",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300210484377000000353",
+        "comments": "ABONO INTERESES GANADOS",
+        "isFinanceable": false,
+        "moneyFlow": "INCOME",
+        "status": "SETTLED",
+        "valuationDate": "2024-03-31T00:00:00.000-0500",
+        "concept": {
+          "id": "501",
+          "name": "ABONO INTERESES GANADOS"
+        },
+        "postedBalance": {
+          "amount": 1998735320.4,
+          "currency": "PEN"
+        },
+        "contract": {
+          "id": "PE001101300210484377",
+          "number": "001101300210484377"
+        },
+        "operation": {
+          "id": "PE00110201300210484377000000353",
+          "date": "2024-10-21T22:19:00.000-0500"
+        },
+        "transaction": {
+          "id": "353",
+          "amount": 429701.5,
+          "currency": "PEN"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300210484377",
+        "transactionId": "PE00110201300210484377000000353"
+      }
+    },
+    {
+      "id": "DTL-05",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-ahorro-d-lares",
+      "description": "Detalle de movimiento de una cuenta ahorro dólares",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300210515493000000062",
+        "comments": "*C/PROV 7803D44B48A84948AC85156BA9",
+        "isFinanceable": false,
+        "moneyFlow": "EXPENSE",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-11T00:00:00.000-0500",
+        "concept": {
+          "id": "612",
+          "name": "CARGO POR TRASPASO"
+        },
+        "postedBalance": {
+          "amount": 1023691999.06,
+          "currency": "USD"
+        },
+        "contract": {
+          "id": "PE001101300210515493",
+          "number": "001101300210515493"
+        },
+        "operation": {
+          "id": "PE00110201300210515493000000062",
+          "date": "2024-11-11T15:43:00.000-0500"
+        },
+        "transaction": {
+          "id": "62",
+          "amount": -400,
+          "currency": "USD"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300210515493",
+        "transactionId": "PE00110201300210515493000000062"
+      }
+    },
+    {
+      "id": "DTL-06",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-plazo-soles",
+      "description": "Detalle de movimiento de una cuenta plazo soles",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300301020152000000004",
+        "comments": "APERTURA DEPOSITO 003",
+        "isFinanceable": false,
+        "moneyFlow": "INCOME",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-20T00:00:00.000-0500",
+        "concept": {
+          "id": "516",
+          "name": "APERTURA DEPOSITO A PLAZO"
+        },
+        "postedBalance": {
+          "amount": 244315,
+          "currency": "PEN"
+        },
+        "contract": {
+          "id": "PE001101300301020152",
+          "number": "001101300301020152"
+        },
+        "operation": {
+          "id": "PE00110201300301020152000000004",
+          "date": "2024-11-20T16:47:00.000-0500"
+        },
+        "transaction": {
+          "id": "4",
+          "amount": 88765,
+          "currency": "PEN"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300301020152",
+        "transactionId": "PE00110201300301020152000000004"
+      }
+    },
+    {
+      "id": "DTL-07",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-plazo-dolares",
+      "description": "Detalle de movimiento de una cuenta plazo dolares",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 200,
+      "requestBody": null,
+      "expectedResponse": {
+        "id": "PE00110201300301019189000000003",
+        "comments": "APERTURA DEPOSITO 002",
+        "isFinanceable": false,
+        "moneyFlow": "INCOME",
+        "status": "SETTLED",
+        "valuationDate": "2024-11-20T00:00:00.000-0500",
+        "concept": {
+          "id": "516",
+          "name": "APERTURA DEPOSITO A PLAZO"
+        },
+        "postedBalance": {
+          "amount": 120250,
+          "currency": "USD"
+        },
+        "contract": {
+          "id": "PE001101300301019189",
+          "number": "001101300301019189"
+        },
+        "operation": {
+          "id": "PE00110201300301019189000000003",
+          "date": "2024-11-20T15:04:00.000-0500"
+        },
+        "transaction": {
+          "id": "3",
+          "amount": 12800,
+          "currency": "USD"
+        }
+      },
+      "pathParameters": {
+        "accountId": "001101300301019189",
+        "transactionId": "PE00110201300301019189000000003"
+      }
+    },
+    {
+      "id": "DTL-08",
+      "group": "detail",
+      "name": "detalle-de-movimiento-con-n-mero-de-cuenta-mayor-a-18-d-gito",
+      "description": "Detalle de movimiento con número de cuenta mayor a 18 dígitos",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number must be 18 digits long.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "0011013000210515493",
+        "transactionId": "PE00110201300210515493000000063"
+      }
+    },
+    {
+      "id": "DTL-09",
+      "group": "detail",
+      "name": "detalle-de-movimiento-con-n-mero-de-cuenta-menor-a-18-d-gito",
+      "description": "Detalle de movimiento con número de cuenta menor a 18 dígitos",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number must be 18 digits long.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "00110130010511473",
+        "transactionId": "PE00110201300105114734000000016"
+      }
+    },
+    {
+      "id": "DTL-10",
+      "group": "detail",
+      "name": "detalle-de-movimiento-con-n-mero-de-cuenta-con-caracteres-al",
+      "description": "Detalle de movimiento con número de cuenta con caracteres alfanumericos",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The account number accepts only numbers.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "0*110LK00105114732",
+        "transactionId": "PE00110201300105114734000000015"
+      }
+    },
+    {
+      "id": "DTL-11",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-no-asociada-en-api",
+      "description": "Detalle de movimiento de una cuenta no asociada en API",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 403,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "forbidden",
+            "message": "Access denied",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300210522600",
+        "transactionId": "PE00110201300210522635000000003"
+      }
+    },
+    {
+      "id": "DTL-12",
+      "group": "detail",
+      "name": "detalle-de-movimiento-ingresando-identificador-de-transacci",
+      "description": "Detalle de movimiento ingresando identificador de transacción con caracteres no alfanuméricos",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The transaction number only accepts letters and numbers.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300210515493",
+        "transactionId": "PE0;110201300210515*930000=0065"
+      }
+    },
+    {
+      "id": "DTL-13",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-con-identificador-de-tra",
+      "description": "Detalle de movimiento de una cuenta con identificador de transacción incorrecto",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "badRequest",
+            "message": "The transaction number does not exist.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300105109854",
+        "transactionId": "PE00110201300105109854000001091"
+      }
+    },
+    {
+      "id": "DTL-14",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-con-identificador-de-tra",
+      "description": "Detalle de movimiento de una cuenta con identificador de transacción mayor a 31 caracteres",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The transaction number must be 31 characters.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300210515493",
+        "transactionId": "PE001102013002105154930000000066"
+      }
+    },
+    {
+      "id": "DTL-15",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-con-identificador-de-tra",
+      "description": "Detalle de movimiento de una cuenta con identificador de transacción menor a 31 caracteres",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "invalidParameters",
+            "message": "The transaction number must be 31 characters.",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300210515493",
+        "transactionId": "PE0011020130021051549300000065"
+      }
+    },
+    {
+      "id": "DTL-16",
+      "group": "detail",
+      "name": "detalle-de-movimiento-de-una-cuenta-cuando-el-servicio-no-es",
+      "description": "Detalle de movimiento de una cuenta cuando el servicio no está disponible",
+      "method": "GET",
+      "path": "/pe/business-reconciliation/v1/accounts/{accountId}/transactions/{transactionId}",
+      "expectedStatusCode": 400,
+      "requestBody": null,
+      "expectedResponse": {
+        "messages": [
+          {
+            "code": "badRequest",
+            "message": "badRequest",
+            "type": "ERROR"
+          }
+        ]
+      },
+      "pathParameters": {
+        "accountId": "001101300301019189",
+        "transactionId": "PE00110201300301019189000000009"
+      }
+    }
+  ]
+}
