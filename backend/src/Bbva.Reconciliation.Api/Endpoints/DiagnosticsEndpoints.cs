@@ -6,10 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace Bbva.Reconciliation.Api.Endpoints;
 
-/// <summary>Health and signing diagnostics.</summary>
 public static class DiagnosticsEndpoints
 {
-    public static IEndpointRouteBuilder MapDiagnosticsEndpoints(this IEndpointRouteBuilder routes)
+    public static IEndpointRouteBuilder MapDiagnosticsEndpoints(
+        this IEndpointRouteBuilder routes,
+        bool includeSignaturePreview = true)
     {
         ArgumentNullException.ThrowIfNull(routes);
 
@@ -26,16 +27,19 @@ public static class DiagnosticsEndpoints
             .Produces<HealthResponse>(StatusCodes.Status200OK)
             .Produces<HealthResponse>(StatusCodes.Status503ServiceUnavailable);
 
-        group.MapPost("/diagnostics/signature-preview", PreviewSignature)
-            .WithName("PreviewSignature")
-            .WithSummary("Compute a request signature without sending it")
-            .WithDescription(
-                "Returns the digest, the exact string that would be signed, the Date header and " +
-                "the resulting Signature. BBVA answers a bad signature with a bare 401 and no " +
-                "diagnostics, so being able to inspect the signed string is the fastest way to " +
-                "find a mismatch.")
-            .Produces<SignaturePreview>(StatusCodes.Status200OK)
-            .ProducesProblem(StatusCodes.Status400BadRequest);
+        if (includeSignaturePreview)
+        {
+            group.MapPost("/diagnostics/signature-preview", PreviewSignature)
+                .WithName("PreviewSignature")
+                .WithSummary("Compute a request signature without sending it")
+                .WithDescription(
+                    "Returns the digest, the exact string that would be signed, the Date header and " +
+                    "the resulting Signature. BBVA answers a bad signature with a bare 401 and no " +
+                    "diagnostics, so being able to inspect the signed string is the fastest way to " +
+                    "find a mismatch.")
+                .Produces<SignaturePreview>(StatusCodes.Status200OK)
+                .ProducesProblem(StatusCodes.Status400BadRequest);
+        }
 
         return routes;
     }
@@ -98,12 +102,6 @@ public static class DiagnosticsEndpoints
     }
 }
 
-/// <param name="Status">Either <c>healthy</c> or <c>unhealthy</c>.</param>
-/// <param name="BaseUrl">The BBVA API Market root this service is pointed at.</param>
-/// <param name="TokenAcquired">Whether an OAuth token could be obtained.</param>
-/// <param name="TokenExpiresAt">When the cached token stops being used.</param>
-/// <param name="TokenValidForSeconds">Remaining lifetime of the cached token.</param>
-/// <param name="Detail">Why the check failed, when it did.</param>
 public sealed record HealthResponse(
     string Status,
     string BaseUrl,

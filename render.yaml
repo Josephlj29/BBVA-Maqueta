@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: bbva-reconciliation-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: false
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: Cors__AllowedOrigins__0
+        value: https://bbva-reconciliation-ui.vercel.app
+      - key: Cors__AllowedOrigins__1
+        value: http://localhost:4200
+      - key: Bbva__ClientId
+        sync: false
+      - key: Bbva__ClientSecret
+        sync: false
+      - key: Bbva__PrivateKeyBase64
+        sync: false

@@ -13,8 +13,6 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
-    // Enums cross the wire as names, not ordinals. A TypeScript client should switch on
-    // "Passed", not on 0, and a renumbered enum must never silently change the contract.
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
@@ -28,8 +26,6 @@ builder.Services.AddScoped<GetMovementHandler>();
 
 builder.Services.AddOpenApi(options => options.AddDocumentTransformer<BbvaOpenApiDocumentTransformer>());
 
-// The browser never sees the client secret or the signing key: Angular talks only to this
-// service, which signs and calls BBVA. The dev-server origins are the only ones allowed.
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
     ?? ["http://localhost:4200", "https://localhost:4200"];
 
@@ -47,10 +43,8 @@ app.UseStatusCodePages();
 app.UseCors(AngularCorsPolicy);
 
 app.MapMovementEndpoints();
-app.MapDiagnosticsEndpoints();
+app.MapDiagnosticsEndpoints(includeSignaturePreview: !app.Environment.IsProduction());
 
-// The sandbox runner issues real calls against BBVA's sandbox on demand. It is a
-// certification tool, not a production endpoint.
 if (!app.Environment.IsProduction())
 {
     app.MapSandboxEndpoints();
@@ -68,5 +62,4 @@ if (!app.Environment.IsProduction())
 
 await app.RunAsync();
 
-/// <summary>Exposed so the integration test host can reference this entry point.</summary>
 public partial class Program;
